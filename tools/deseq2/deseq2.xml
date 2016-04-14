@@ -1,4 +1,4 @@
-<tool id="deseq2" name="DESeq2" version="2.1.11.38">
+<tool id="deseq2" name="DESeq2" version="2.11.38">
     <description>Determines differentially expressed features from count tables</description>
     <requirements>
         <!-- odering is crucial, otherwise R will override the ENV variables from deseq2 -->
