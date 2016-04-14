@@ -1,4 +1,4 @@
-<tool id="deseq2" name="DESeq2" version="2.11.38">
+<tool id="deseq2" name="DESeq2" version="2.1.11.38">
     <description>Determines differentially expressed features from count tables</description>
     <requirements>
         <!-- odering is crucial, otherwise R will override the ENV variables from deseq2 -->
@@ -35,14 +35,14 @@
         #end if
 
         #import json
-        Rscript $__tool_directory__/deseq2.R
+        Rscript "${__tool_directory__}/deseq2.R"
             -o "$deseq_out"
             #if $pdf:
                 -p "$plots"
             #end if
             #if $normCounts:
                 -n "$counts_out"
-            #end if            
+            #end if
             #set $temp_factor_names = list()
             #for $factor in $rep_factorName:
                 #set $temp_factor = list()
@@ -83,14 +83,14 @@
     </command>
     <inputs>
         <repeat name="rep_factorName" title="Factor" min="1">
-            <param name="factorName" type="text" value="FactorName" label="Specify a factor name"
+           <param name="factorName" type="text" value="FactorName" label="Specify a factor name, e.g. effects_drug_x or cancer_markers"
                 help="Only letters, numbers and underscores will be retained in this field">
                 <sanitizer>
                     <valid initial="string.letters,string.digits"><add value="_" /></valid>
                 </sanitizer>
             </param>
             <repeat name="rep_factorLevel" title="Factor level" min="2" default="2">
-                <param name="factorLevel" type="text" value="FactorLevel" label="Specify a factor level"
+                <param name="factorLevel" type="text" value="FactorLevel" label="Specify a factor level, typical values could be 'tumor', 'normal', 'treated' or 'control'"
                     help="Only letters, numbers and underscores will be retained in this field">
                     <sanitizer>
                         <valid initial="string.letters,string.digits"><add value="_" /></valid>
