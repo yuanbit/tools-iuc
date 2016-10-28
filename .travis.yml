@@ -16,6 +16,7 @@ before_install:
 
 install:
   - pip install flake8 planemo
+  - planemo --version
   - planemo conda_init
   - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
   - ls -l $PLANEMO_CONDA_PREFIX/bin
