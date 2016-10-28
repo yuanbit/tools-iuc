@@ -18,6 +18,7 @@ install:
   - pip install flake8 planemo
   - planemo conda_init
   - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
+  - ls -l $PLANEMO_CONDA_PREFIX/bin
   - conda create -y -q -c bioconda --name iuc_conda samtools=0.1.19 bcftools
   - . activate iuc_conda
   - planemo --version
