@@ -17,6 +17,10 @@ before_install:
 install:
   - pip install flake8 planemo
   - planemo --version
+  - wget -q --recursive -O '/tmp/conda_installX0PKZh.sh' 'https://repo.continuum.io/miniconda/Miniconda2-4.0.5-Linux-x86_64.sh'
+  - bash '/tmp/conda_installX0PKZh.sh' -b -p "$HOME/conda/miniconda2"
+  - $HOME/conda/miniconda2/bin/conda install -y -q conda=3.19.3 
+
   - planemo conda_init
   - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
   - ls -l $PLANEMO_CONDA_PREFIX/bin
