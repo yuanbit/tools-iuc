@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: python
 python: 2.7
 
@@ -10,6 +10,7 @@ env:
   - CHUNK=3
 
 before_install:
+  - sudo apt-get install -qq openssl
   - export GALAXY_REPO=https://github.com/galaxyproject/galaxy
   - export GALAXY_RELEASE=release_16.07
   - export PLANEMO_CONDA_PREFIX="$HOME/conda"
