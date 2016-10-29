@@ -17,7 +17,7 @@ before_install:
 install:
   - pip install flake8 planemo
   - planemo --version
-  - openssl --version
+  - openssl version
   - curl -L -o '/tmp/conda_installX0PKZh.sh' 'https://repo.continuum.io/miniconda/Miniconda2-4.0.5-Linux-x86_64.sh'
   - bash '/tmp/conda_installX0PKZh.sh' -b -p "$HOME/conda/miniconda2"
   - $HOME/conda/miniconda2/bin/conda install -y -q conda=3.19.3 
