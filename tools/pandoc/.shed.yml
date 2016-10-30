@@ -1,0 +1,14 @@
+name: pandoc
+owner: iuc
+description: Convert files from one markup format into another
+homepage_url: http://pandoc.org/
+long_description: |
+    If you need to convert files from one markup format into another, pandoc is your swiss-army knife.
+    Pandoc can convert documents in markdown, reStructuredText, textile, HTML, DocBook, LaTeX, MediaWiki markup,
+    TWiki markup, OPML, Emacs Org-Mode, Txt2Tags, Microsoft Word docx, LibreOffice ODT, EPUB, or Haddock markup to
+    a lot of other formats.
+
+remote_repository_url: https://github.com/galaxyproject/tools-iuc/tree/master/tools/pandoc
+type: unrestricted
+categories:
+  - Convert Formats
