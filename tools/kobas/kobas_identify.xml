@@ -3,9 +3,7 @@
     <macros>
         <import>kobas_macros.xml</import>
     </macros>
-
     <expand macro="requirements"/>
-
     <command>
         <![CDATA[
 
@@ -40,7 +38,6 @@
     </command>
     <inputs>
         <param format="tabular" type="data" label="Foreground" argument="--fgfile" help="Foreground file, the output of KOBAS Annotate"/>
-
         <expand macro="input_kobasdb"/>
 
         <param type="select" label="Database" argument="--db" multiple="True" display="checkboxes" help="Select your desired databases:

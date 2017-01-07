@@ -76,7 +76,6 @@
                 #else:
                     -x mapping.txt
                 #end if
-
             #end if
     ]]>
     </command>

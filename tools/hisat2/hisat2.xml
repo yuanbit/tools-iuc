@@ -19,11 +19,11 @@
     <command>
         <![CDATA[
         #if str($spliced_options.spliced_options_selector) == "advanced" and str($spliced_options.known_splice_gtf) != 'None':
-            ln -s "${spliced_options.known_splice_gtf}" splice_sites.gtf &&
+            ln -s '${spliced_options.known_splice_gtf}' splice_sites.gtf &&
             hisat2_extract_splice_sites.py splice_sites.gtf > splice_sites.txt &&
         #end if
         #if $reference_genome.reference_genome_source == "history":
-            ln -s "$reference_genome.history_item" genome.fa &&
+            ln -s '$reference_genome.history_item' genome.fa &&
             hisat2-build genome.fa genome && 
             #set index_path = 'genome'
         #else:
@@ -31,13 +31,13 @@
         #end if
         hisat2 -p \${GALAXY_SLOTS:-1} -x "${index_path}"
         #if str($input_format.paired.paired_selector) == 'paired':
-            -1 "${input_format.paired.reads_f}" -2 "${input_format.paired.reads_r}"
+            -1 '${input_format.paired.reads_f}' -2 '${input_format.paired.reads_r}'
             @paired_end_options@
         #else if str($input_format.paired.paired_selector) == 'paired_collection':
-            -1 "${input_format.paired.reads.forward}" -2 "${input_format.paired.reads.reverse}"
+            -1 '${input_format.paired.reads.forward}' -2 '${input_format.paired.reads.reverse}'
             @paired_end_options@
         #else:
-            -U "${input_format.paired.reads}"
+            -U '${input_format.paired.reads}'
         #end if
         #if $input_format.input_format_selector == 'fasta':
             -f
@@ -83,7 +83,7 @@
             --minins ${paired_options.minins} --maxins ${paired_options.maxins} ${paired_options.no_mixed} ${paired_options.no_discordant}
             ${paired_options.dovetail} ${paired_options.contain} ${paired_options.overlap}
         #end if
-        | samtools sort - -@ \${GALAXY_SLOTS:-2} -l 6 -o hsbam > "${output_alignments}"
+        | samtools sort - -@ \${GALAXY_SLOTS:-2} -l 6 -o hsbam > '${output_alignments}'
         ]]>
     </command>
     <inputs>

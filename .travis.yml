@@ -8,8 +8,8 @@ env:
   - CHUNK=1
 
 before_install:
-  - export GALAXY_REPO=https://github.com/galaxyproject/galaxy
-  - export GALAXY_RELEASE=release_16.10
+  - export GALAXY_REPO=https://github.com/jmchilton/galaxy
+  - export GALAXY_RELEASE=resolve_all_at_once
   - export PLANEMO_CONDA_PREFIX="$HOME/conda"
 
 install:

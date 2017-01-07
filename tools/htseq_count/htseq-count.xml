@@ -33,7 +33,7 @@
         #if $samfile.extension == 'bam':
             samtools sort -n "$samfile" "name_sorted_alignment" &&
         #else
-            samtools view -Su -t "${reference_fasta_filename}.fai" "$samfile" | samtools sort -n - "name_sorted_alignment" &&
+            samtools view -Su -t '${reference_fasta_filename}.fai' "$samfile" | samtools sort -n - "name_sorted_alignment" &&
         #end if
     #end if
     

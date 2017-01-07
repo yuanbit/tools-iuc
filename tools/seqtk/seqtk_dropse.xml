@@ -6,9 +6,11 @@
   </macros>
   <expand macro="requirements"/>
   <expand macro="stdio"/>
-  <command><![CDATA[seqtk dropse
-      $in_file
-> $default]]></command>
+  <command><![CDATA[
+      seqtk dropse
+        '$in_file'
+        > $default
+  ]]></command>
   <inputs>
     <expand macro="in_faq"/>
   </inputs>
