@@ -579,7 +579,7 @@ class JbrowseConnector(object):
         })
         self._add_track_json(trackData)
 
-    def add_features(self, data, format, trackData, gffOpts, metadata=None, **kwargs):
+    def add_features(self, data, format, trackData, gffOpts, **kwargs):
         cmd = [
             'perl', self._jbrowse_bin('flatfile-to-json.pl'),
             self.TN_TABLE.get(format, 'gff'),
@@ -622,8 +622,6 @@ class JbrowseConnector(object):
             '--trackType', gffOpts['trackType']
         ]
 
-        if metadata:
-            config.update({'metadata': metadata})
         cmd.extend(['--config', json.dumps(config)])
 
         self.subprocess_check_call(cmd)
@@ -692,6 +690,7 @@ class JbrowseConnector(object):
             hashData = [dataset_path, track_human_label, track['category'], rest_url]
             hashData = '|'.join(hashData).encode('utf-8')
             outputTrackConfig['label'] = hashlib.md5(hashData).hexdigest() + '_%s' % i
+            outputTrackConfig['metadata'] = extra_metadata
 
             # Colour parsing is complex due to different track types having
             # different colour options.
@@ -712,10 +711,10 @@ class JbrowseConnector(object):
             # import sys; sys.exit()
             if dataset_ext in ('gff', 'gff3', 'bed'):
                 self.add_features(dataset_path, dataset_ext, outputTrackConfig,
-                                  track['conf']['options']['gff'], metadata=extra_metadata)
+                                  track['conf']['options']['gff'])
             elif dataset_ext == 'bigwig':
                 self.add_bigwig(dataset_path, outputTrackConfig,
-                                track['conf']['options']['wiggle'], metadata=extra_metadata)
+                                track['conf']['options']['wiggle'])
             elif dataset_ext == 'bam':
                 real_indexes = track['conf']['options']['pileup']['bam_indices']['bam_index']
                 if not isinstance(real_indexes, list):
@@ -730,13 +729,13 @@ class JbrowseConnector(object):
 
                 self.add_bam(dataset_path, outputTrackConfig,
                              track['conf']['options']['pileup'],
-                             bam_index=real_indexes[i], metadata=extra_metadata)
+                             bam_index=real_indexes[i])
             elif dataset_ext == 'blastxml':
-                self.add_blastxml(dataset_path, outputTrackConfig, track['conf']['options']['blast'], metadata=extra_metadata)
+                self.add_blastxml(dataset_path, outputTrackConfig, track['conf']['options']['blast'])
             elif dataset_ext == 'vcf':
-                self.add_vcf(dataset_path, outputTrackConfig, metadata=extra_metadata)
+                self.add_vcf(dataset_path, outputTrackConfig)
             elif dataset_ext == 'rest':
-                self.add_rest(track['conf']['options']['url'], outputTrackConfig, metadata=extra_metadata)
+                self.add_rest(track['conf']['options']['url'], outputTrackConfig)
             else:
                 log.warn('Do not know how to handle %s', dataset_ext)
 
