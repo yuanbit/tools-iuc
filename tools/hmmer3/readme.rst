@@ -1,7 +1,7 @@
 Galaxy wrapper for HMMER3
 =========================
 
-This wrapper is copyright 2015 by Eric Rasche
+This wrapper is copyright 2015 by Helena Rasche
 
 HMMER is used for searching sequence databases for homologs of protein
 sequences, and for making protein sequence alignments. It implements methods

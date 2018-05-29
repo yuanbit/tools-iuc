@@ -10,11 +10,6 @@ from Bio.SeqFeature import FeatureLocation
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
-__author__ = "Eric Rasche"
-__version__ = "0.4.0"
-__maintainer__ = "Eric Rasche"
-__email__ = "esr@tamu.edu"
-
 
 def feature_lambda(feature_list, test, test_kwargs, subfeatures=True):
     """Recursively search through features, testing each with a test function, yielding matches.
