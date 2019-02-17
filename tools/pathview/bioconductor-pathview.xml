@@ -1,0 +1,134 @@
+<tool id="bioconductor-pathview" name="pathview" version="@VERSION@.0">
+    <description>integrates and renders data on pathway graphs</description>
+
+     <macros>
+        <token name="@VERSION@">1.18.0</token>
+    </macros>
+
+   <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+
+
+## File Input
+
+data(gse16873.d)
+
+pathview(gene.data = gse16873.d[, 1], pathway.id = "04110", species = "hsa")
+
+## OUTPUT
+
+
+]]>
+        </configfile>
+    </configfiles>
+
+    <inputs>
+        <param name="inputFile" type="data" format="tabular" label="Upload data" />
+
+        <conditional name="data_select">
+            <param name="data_selector" type="select" label="Gene or Cpd Data?">
+                <option value="gene">Gene Data</option>
+                <option value="cpd">Cpd Data</option>
+                <option value="gene_cpd">Gene and Cpd Data</option>
+            </param>
+            <when value="gene">
+                <param name="gene_data" type="data" format="tabular" label="Upload gene data" help="Either vector (single sample) or a matrix-like data (multiple sample). Vector should be numeric with gene IDs as names or it may also be character of gene IDs. Character vector is treated as discrete or count data. Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs." />
+                <param name="gene_idtype" type="text" value="entrez" label="ID type used for the gene.data" help="Case insensitive. i.e. Entrez Gene, which are the primary KEGG gene ID for many common model organisms. For other species, the idtype should be set to KEGG as it uses other types of gene IDs."/>
+                <param name="discrete_gene" type="boolean" truevalue="true" falsevalue="false" checked="falsevalue" label="Treat gene data as discrete?" />
+                <param name="limit_gene" type="select" label="Specify the limit values for gene data when converting it to pseudo colors." help="Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." >
+                    <option value="1" selected="true">1</option>
+                    <option values="2">2</option>
+                </param>
+                <param name="bins_gene" type="integer" value="10" label="Specify the number of levels or bins for gene data when converting it to pseudo colors." />
+                <param name="both_dirs_gene" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Gene data is 2 directional when converting them to pseudo colors?" />
+            </when>
+            <when value="cpd"> 
+                <param name="cpd_data" type="data" format="tabular" label="Upload cpd data" help="Either vector (single sample) or a matrix-like data (multiple sample). Vector should be numeric with gene IDs as names or it may also be character of gene IDs named with IDs mappable to KEGG compound IDs. Character vector is treated as discrete or count data. Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Over 20 types of IDs included in CHEMBL database can be used here." />
+                <param name="cpd_idtype" type="text" value="kegg" label="ID type used for the cpd data" />
+                <param name="discrete_cpd" type="boolean" truevalue="true" falsevalue="false" checked="falsevalue" label="Treat cpd data as discrete?" />
+                 <param name="limit_cpd" type="select" label="Specify the limit values for cpd data when converting it to pseudo colors." help="Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." >
+                    <option value="1" selected="true">1</option>
+                    <option values="2">2</option>
+                </param>
+                <param name="bins_cpd" type="integer" value="10" label="Specify the number of levels or bins for cpd data when converting it to pseudo colors." />
+                 <param name="both_dirs_cpd" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Cpd data is 2 directional when converting them to pseudo colors?" />
+            </when>
+            <when value="gene_cpd">
+
+                <!--TO DO
+
+                    put gene and cpd in macros then put here -->
+
+            </when>
+        </conditional>
+        <param name="pathway_id" type="text" label="The KEGG pathway ID(s)" help="Usually 5 digit, may also include the 3 letter KEGG species code." />
+        <param name="species" type="text" value="hsa" label="Species" help="Either the kegg code, scientific name or the common name of the target species. When KEGG ortholog pathway is considered, the species is ko. The species hsa is equivalent to either Homo sapiens (scientific name) or human (common name)." />
+        <param name="gene_annotpkg" type="text" optional="true" label="The name of the annotation package to use for mapping between other
+        gene ID types including symbols and Entrez gene ID." />
+        <param name="min_nnodes" type="integer" value="3" label="Minimal number of nodes of type gene, enzyme, compound, or orthologfor a pathway to be considered." />
+        <conditional name="kegg_native_select">
+            <param name="kegg_native" type="select" label="Render pathway graph as native KEGG graph (.png) or using graphviz layout engine (.pdf)?" >
+                <option value="true">PNG</option>
+                <option value="false">PDF</option>
+            </param>
+            <when value="true"> </when>
+            <when value="false">
+                <param name="split_group" type="boolean" truevalue="true" falsevalue="false" checked="false" label="Split node groups into individual nodes?" help="Each split member nodes inherits all edges from the node group. This option also effects most metabolic pathways even without group nodes defined orginally. For these pathways, genes involved in the same reaction are grouped automatically when converting reactions to edges unless true is selected." />
+                <param name="map_symbol" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Map gene IDs to symbols for gene node labels?" help="Select false to use the graphic name from the KGML file." />
+                <param name="map_cpdname" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Map compound IDs to formal names for compound node labels?" help="Select false to use the graphic name from the KGML file (KEGG compound accessions)." />
+            </when>
+        </conditional>
+        <param name="map_null" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Map the NULL gene data or cpd data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view (for PNG outputs)" />
+        <param name="expand_node" type="boolean" true="true" false="false" checked="false" label="Expand the multiple-gene nodes into single-gene nodes?" help="Each expanded single-gene nodes inherits all edges from the original multiplegene node. This option only affects graphviz graph view (PDF outputs). This option is not effective for most metabolic pathways where it conflits with converting reactions to edges."  />
+        <param name="node_sum" type="select" label="Mthod name to calculate node summary given that multiple genesor compounds are mapped to it." >
+            <option value="sum" selected="true">Sum</option>
+            <option value="mean">Mean</option>
+            <option value="median">Median</option>
+            <option value="max">Max</option>
+            <option value="max_abs">Max Abs</option>
+            <option value="random">Random</option>
+        </param>
+
+
+
+       
+        
+
+
+        
+
+        <!--Unessessary?
+            kegg.dir-->
+        
+    </inputs>
+
+    <outputs>
+        <data name="output1" format="png" from_work_dir="output1.png" label="${tool.name} on ${on_string}: Plot" />
+        <data name="output2" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: Plot2" />
+        <data name="outputxml" format="xml" from_work_dir="output.xml" label="${tool.name} on ${on_string}: xml" />
+
+        
+    </outputs>
+    <help><![CDATA[
+        Pathview is a tool set for pathway based data integration and visualization. It maps and renders a wide variety of biological data on relevant pathway graphs. All users need is to supply their data and specify the target pathway. Pathview automatically downloads the pathway graph data, parses the data file, maps user data to the pathway, and render pathway graph with the mapped data. In addition, Pathview also seamlessly integrates with pathway and gene set (enrichment) analysis tools for large-scale and fully automated analysis.
+    ]]></help>
+
+    <citations>
+          <citation type="doi">10.18129/B9.bioc.pathview</citation>
+    </citations>
+</tool>
