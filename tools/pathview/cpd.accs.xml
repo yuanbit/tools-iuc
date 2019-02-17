@@ -1,0 +1,99 @@
+<tool id="pathview_cpd.accs" name="cpd.accs" version="@VERSION@.0">
+    <description>with pathview</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+#if output_select.output_selector == "yes"
+    data(cpd.accs)
+
+    write.table(cpd.accs, "$cpd_output1", row.name=FALSE, col.name=TRUE, quote=FALSE)
+
+#end if
+
+data(cpd.accs)
+data(cpd.names)
+data(kegg.met)
+data(ko.ids)
+data(rn.list)
+data(gene.idtype.list)
+data(gene.idtype.bods)
+data(cpd.simtypes)
+
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="output_select" type="select" multiple="true" label="Which mapped data to output?" >
+            <option value="cpd_accs">cpd.accs</option>
+            <option value="cpd_names">cpd.names</option>
+            <option value="kegg_met"></option>
+            <option value="ko_ids">KEGG ortholog gene IDs</option>
+            <option value="rn_list">compound ID types</option>
+            <option value="gene_idtype_list">common gene, transcript or protein ID types</option>
+            <option value="gene_idtype_bods">common gene, transcript or protein ID types for the 19 major research species in bods</option>
+            <option value="cpd_simtypes">compound related ID types</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data name="cpd_accs_output" format="png" from_work_dir="output1.png" label="${tool.name} on ${on_string}: cpd.accs output" >
+             <filter>output_select == 'cpd_accs'</filter>
+        </data>
+        <data name="cpd_names_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: cpd.names output" >
+            <filter>output_select == 'cpd_names'</filter>
+        </data>
+        <data name="kegg_met_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: kegg.met output" >
+            <filter>output_select == 'cpd_names'</filter>
+        </data>
+        <data name="ko_ids_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: ko.ids output" >
+            <filter>output_select == 'ko_ids'</filter>
+        </data>
+        <data name="rn_list_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: rn.list output" >
+            <filter>output_select == 'rn_list'</filter>
+        </data>
+        <data name="gene_idtype_list_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: gene.idtype.list output" >
+            <filter>output_select == 'gene_idtype_list'</filter>
+        </data>
+        <data name="gene_idtype_bods_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: gene.idtype.bods output" >
+            <filter>output_select == 'gene_idtype_bods'</filter>
+        </data>
+        <data name="cpd_simtypes_output" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: cpd.simtypes output" >
+            <filter>output_select == 'cpd_simtypes'</filter>
+        </data>
+    </outputs>
+
+    <help><![CDATA[
+Mapping data between compound or gene IDs and KEGG accessions.
+
+It returns:
+
+- `cpd.accs:` data frame with 30054 observations on the following 4 variables. 
+- `cpd.names:` data frame with 12314 observations on the following 5 variables. 
+- `kegg.met:' character matrix of 694 rows and 3 columns. 
+- `ko.ids:` data frame of 8511 KEGG ortholog gene IDs, as used in KEGG ortholog pathways. 
+- `rn.list:` a namedlist of 21 vectors. Each vector records the row numbers for one of 21 dfferent compound ID types in cpd.accs
+- `gene.idtype.list:` data frame of 13 common gene, transcript or protein ID types. Note some ID types are species specific, for example TAIR or ORF. 
+- `gene.idtype.bods:` data frame of common gene, transcript or protein ID types for the 19 major research species in bods. Each element corresponds to a species.
+-`cpd.simtypes:` dataframe of 7 common compound related ID types, each of them has over 1000 unique entries. Hence these ID types are good for generating simulation compound data.
+    ]]></help>
+    <expand macro="citations" />
+</tool>

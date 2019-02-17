@@ -1,0 +1,59 @@
+<tool id="pathview_combineKEGGnodes" name="combineKEGGnodes" version="@VERSION@.0">
+    <description>with pathview</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+
+combineKEGGnodes(nodes, graph, combo.node)
+reaction2edge(path, gR)
+
+]]>
+        </configfile>
+    </configfiles>
+
+    <inputs>
+
+nodes character, names of the names to be combined.
+graph, gR a object of "graphNEL" class, the graph parsed and converted from KEGG pathway.
+path a object of "KEGGPathway" class, the parsed KEGG pathway.
+combo.node character, the name of result combined node.
+    </inputs>
+
+    <outputs>
+        <data name="output1" format="png" from_work_dir="output1.png" label="${tool.name} on ${on_string}: Plot" />
+        <data name="output2" format="png" from_work_dir="output2.png" label="${tool.name} on ${on_string}: Plot2" />
+        <data name="outputxml" format="xml" from_work_dir="output.xml" label="${tool.name} on ${on_string}: xml" />
+
+        
+    </outputs>
+
+    <help><![CDATA[
+combineKEGGnodes combines nodes into a group in a KEGG pathway graph. reaction2edge converts reactions into edges in KEGG pathway graph.
+
+This tool not only combines nodes in the graph object, but also corresponding node data in the KEGG pathway object. This function is needed for KEGG-defined group nodes and parsed enzyme groups involved in the same reaction. reaction2edge converts a reaction into 2 consecutive edges between substrate and enzyme and enzyme and product. This function is needed as to faithfully show the compound-enzyme nodes and their interactions in Graphviz-style view of KEGG pathway.
+
+It returns:
+
+- `combined graph of "graphNEL" class`
+- `list of 3 elements:` gR, the converted graph ("graphNEL"); edata.new, the new edge data ("KEGGEdge"); ndata.new, the new node data ("KEGGNode")
+    ]]></help>
+    <expand macro="citations" />
+</tool>
