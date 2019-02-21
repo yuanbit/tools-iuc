@@ -27,15 +27,15 @@ library(pathview)
 #end if
 #if str($output_select.output_selector) == "cpd_names"
     data(cpd.names)
-    write.table(cpd.accs, "$cpd_names_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+    write.table(cpd.names, "$cpd_names_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
 #end if
-#if str($output_select.output_selector) == "kegg.met"
+#if str($output_select.output_selector) == "kegg_met"
     data(kegg.met)
-    write.table(cpd.accs, "$kegg_met_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+    write.table(kegg.met, "$kegg_met_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
 #end if
-#if str($output_select.output_selector) == "ko.ids"
+#if str($output_select.output_selector) == "ko_ids"
     data(ko.ids)
-    write.table(cpd.accs, "$kegg_met_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+    write.table(ko.ids, "$kegg_met_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 #end if
 #if str($output_select.output_selector) == "rn_list"
     data(rn.list)
@@ -111,61 +111,61 @@ library(pathview)
 #if str($output_select.output_selector) == "gene_idtype_bods"
     data(gene.idtype.bods)
     #if str($output_select.gene_idtype_bods_select) == "aga"
-        write.table(gene.idtype.list[1], "$gene_idtype_bods_output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[1], "$gene_idtype_bods_output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "ath"
-        write.table(gene.idtype.list[2], "$gene_idtype_bods_output2", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[2], "$gene_idtype_bods_output2", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "bta"
-        write.table(gene.idtype.list[3], "$gene_idtype_bods_output3", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[3], "$gene_idtype_bods_output3", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "cel"
-        write.table(gene.idtype.list[4], "$gene_idtype_bods_output4", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[4], "$gene_idtype_bods_output4", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "cfa"
-        write.table(gene.idtype.list[5], "$gene_idtype_bods_output5", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[5], "$gene_idtype_bods_output5", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "dme"
-        write.table(gene.idtype.list[6], "$gene_idtype_bods_output6", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[6], "$gene_idtype_bods_output6", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "dre"
-        write.table(gene.idtype.list[7], "$gene_idtype_bods_output7", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[7], "$gene_idtype_bods_output7", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "eco"
-        write.table(gene.idtype.list[8], "$gene_idtype_bods_output8", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[8], "$gene_idtype_bods_output8", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "ecs"
-        write.table(gene.idtype.list[9], "$gene_idtype_bods_output9", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[9], "$gene_idtype_bods_output9", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "gga"
-        write.table(gene.idtype.list[10], "$gene_idtype_bods_output10", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[10], "$gene_idtype_bods_output10", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "hsa"
-        write.table(gene.idtype.list[11], "$gene_idtype_bods_output11", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[11], "$gene_idtype_bods_output11", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "mmu"
-        write.table(gene.idtype.list[12], "$gene_idtype_bods_output12", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[12], "$gene_idtype_bods_output12", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "mcc"
-        write.table(gene.idtype.list[13], "$gene_idtype_bods_output13", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[13], "$gene_idtype_bods_output13", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "pfa"
-        write.table(gene.idtype.list[14], "$gene_idtype_bods_output14", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[14], "$gene_idtype_bods_output14", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "ptr"
-        write.table(gene.idtype.list[15], "$gene_idtype_bods_output15", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[15], "$gene_idtype_bods_output15", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "rno"
-        write.table(gene.idtype.list[16], "$gene_idtype_bods_output16", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[16], "$gene_idtype_bods_output16", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "sce"
-        write.table(gene.idtype.list[17], "$gene_idtype_bods_output17", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[17], "$gene_idtype_bods_output17", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "ssc"
-        write.table(gene.idtype.list[18], "$gene_idtype_bods_output18", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[18], "$gene_idtype_bods_output18", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
      #if str($output_select.gene_idtype_bods_select) == "xla"
-        write.table(gene.idtype.list[19], "$gene_idtype_bods_output19", row.name=FALSE, col.name=FALSE, quote=FALSE)
+        write.table(gene.idtype.bods[19], "$gene_idtype_bods_output19", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
 #end if
 #if str($output_select.output_selector) == "cpd_simtypes"
@@ -253,7 +253,7 @@ library(pathview)
             <filter>output_select['output_selector'] == 'cpd_names'</filter>
         </data>
         <data name="kegg_met_output" format="txt" label="${tool.name} on ${on_string}: kegg.met output" >
-            <filter>output_select['output_selector'] == 'cpd_names'</filter>
+            <filter>output_select['output_selector'] == 'kegg_met'</filter>
         </data>
         <data name="ko_ids_output" format="txt" label="${tool.name} on ${on_string}: ko.ids output" >
             <filter>output_select['output_selector'] == 'ko_ids'</filter>
@@ -325,61 +325,61 @@ library(pathview)
             <filter>output_select['output_selector'] == 'gene_idtype_list'</filter>
         </data>
         <data name="gene_idtype_bods_output1" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods aga output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'aga'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'aga'</filter>
         </data>
         <data name="gene_idtype_bods_output2" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods ath output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'ath'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'ath'</filter>
         </data>
         <data name="gene_idtype_bods_output3" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods bta output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'bta'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'bta'</filter>
         </data>
         <data name="gene_idtype_bods_output4" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods cel output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'cel'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'cel'</filter>
         </data>
         <data name="gene_idtype_bods_output5" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods cfa output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'cfa'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'cfa'</filter>
         </data>
         <data name="gene_idtype_bods_output6" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods dme output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'dme'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'dme'</filter>
         </data>
         <data name="gene_idtype_bods_output7" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods dre output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'dre'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'dre'</filter>
         </data>
         <data name="gene_idtype_bods_output8" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods eco output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'eco'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'eco'</filter>
         </data>
         <data name="gene_idtype_bods_output9" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods ecs output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'ecs'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'ecs'</filter>
         </data>
         <data name="gene_idtype_bods_output10" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods gga output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'gga'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'gga'</filter>
         </data>
         <data name="gene_idtype_bods_output11" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods hsa output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'hsa'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'hsa'</filter>
         </data>
         <data name="gene_idtype_bods_output12" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods mmu output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'mmu'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'mmu'</filter>
         </data>
         <data name="gene_idtype_bods_output13" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods mcc output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'mcc'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'mcc'</filter>
         </data>
         <data name="gene_idtype_bods_output14" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods pfa output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'pfa'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'pfa'</filter>
         </data>
         <data name="gene_idtype_bods_output15" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods ptr output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'ptr'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'ptr'</filter>
         </data>
         <data name="gene_idtype_bods_output16" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods rno output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'rno'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'rno'</filter>
         </data>
         <data name="gene_idtype_bods_output17" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods sce output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'sce'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'sce'</filter>
         </data>
         <data name="gene_idtype_bods_output18" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods ssc output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'ssc'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'ssc'</filter>
         </data>
         <data name="gene_idtype_bods_output19" format="txt" label="${tool.name} on ${on_string}: gene.idtype.bods xla output" >
-            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['output_selector']['gene_idtype_bods_select'] == 'xla'</filter>
+            <filter>output_select['output_selector'] == 'gene_idtype_bods' and output_select['gene_idtype_bods_select'] == 'xla'</filter>
         </data>
         <data name="cpd_simtypes_output" format="txt" label="${tool.name} on ${on_string}: cpd.simtypes output" >
             <filter>output_select['output_selector'] == 'cpd_simtypes'</filter>
@@ -399,6 +399,13 @@ library(pathview)
                 <param name="rn_list_select" value="rn_list1" />
             </conditional>
             <output name="rn_list_output1" value="rn.list_Agricola_citation_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="gene_idtype_bods" />
+                <param name="gene_idtype_bods_select" value="aga" />
+            </conditional>
+            <output name="gene_idtype_bods_output1" value="gene.idtype.bods_aga_output.txt" />
         </test>
     </tests>
 
