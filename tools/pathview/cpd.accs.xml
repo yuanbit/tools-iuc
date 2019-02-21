@@ -21,163 +21,165 @@ loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 ## Import library
 library(pathview)
 
-#if output_select == "cpd_accs"
+#if str($output_select.output_selector) == "cpd_accs"
     data(cpd.accs)
     write.table(cpd.accs, "$cpd_accs_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
 #end if
-#if output_select == "cpd_accs"
+#if str($output_select.output_selector) == "cpd_names"
     data(cpd.names)
     write.table(cpd.accs, "$cpd_names_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
 #end if
-#if output_select == "cpd_accs"
+#if str($output_select.output_selector) == "kegg.met"
     data(kegg.met)
     write.table(cpd.accs, "$kegg_met_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
 #end if
-#if output_select == "ko.ids"
+#if str($output_select.output_selector) == "ko.ids"
     data(ko.ids)
     write.table(cpd.accs, "$kegg_met_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 #end if
-#if output_select == "rn.list"
+#if str($output_select.output_selector) == "rn_list"
     data(rn.list)
-    #if output_select.rn_list_select == "rn_list1"
+    #if str($output_select.rn_list_select) == "rn_list1"
+        print("hi")
         write.table(rn.list[1], "$rn_list_output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list2"
+    #if str($output_select.rn_list_select) == "rn_list2"
         write.table(rn.list[2], "$rn_list_output2", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list3"
+    #if str($output_select.rn_list_select) == "rn_list3"
         write.table(rn.list[3], "$rn_list_output3", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list4"
+    #if str($output_select.rn_list_select) == "rn_list4"
         write.table(rn.list[4], "$rn_list_output4", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list5"
+    #if str($output_select.rn_list_select) == "rn_list5"
         write.table(rn.list[5], "$rn_list_output5", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list6"
+    #if str($output_select.rn_list_select) == "rn_list6"
         write.table(rn.list[6], "$rn_list_output6", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list7"
+    #if str($output_select.rn_list_select) == "rn_list7"
         write.table(rn.list[7], "$rn_list_output7", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list8"
+    #if str($output_select.rn_list_select) == "rn_list8"
         write.table(rn.list[8], "$rn_list_output8", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list9"
+    #if str($output_select.rn_list_select) == "rn_list9"
         write.table(rn.list[9], "$rn_list_output9", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list10"
+    #if str($output_select.rn_list_select) == "rn_list10"
         write.table(rn.list[10], "$rn_list_output10", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list11"
+    #if str($output_select.rn_list_select) == "rn_list11"
         write.table(rn.list[11], "$rn_list_output11", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list12"
+    #if str($output_select.rn_list_select) == "rn_list12"
         write.table(rn.list[12], "$rn_list_output12", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list13"
+    #if str($output_select.rn_list_select) == "rn_list13"
         write.table(rn.list[13], "$rn_list_output13", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list14"
+    #if str($output_select.rn_list_select) == "rn_list14"
         write.table(rn.list[14], "$rn_list_output14", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list15"
+    #if str($output_select.rn_list_select) == "rn_list15"
         write.table(rn.list[15], "$rn_list_output15", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list16"
+    #if str($output_select.rn_list_select) == "rn_list16"
         write.table(rn.list[16], "$rn_list_output16", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list17"
+    #if str($output_select.rn_list_select) == "rn_list17"
         write.table(rn.list[17], "$rn_list_output17", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list18"
+    #if str($output_select.rn_list_select) == "rn_list18"
         write.table(rn.list[18], "$rn_list_output18", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list19"
+    #if str($output_select.rn_list_select) == "rn_list19"
         write.table(rn.list[19], "$rn_list_output19", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list20"
+    #if str($output_select.rn_list_select) == "rn_list20"
         write.table(rn.list[20], "$rn_list_output20", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-    #if output_select.rn_list_select == "rn_list21"
+    #if str($output_select.rn_list_select) == "rn_list21"
         write.table(rn.list[21], "$rn_list_output21", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
 #end if
-#if output_select == "gene_idtype_list"
+#if str($output_select.output_selector) == "gene_idtype_list"
     data(gene.idtype.list)
     write.table(gene.idtype.list, "$gene_idtype_list_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 #end if
-#if output_select == "gene_idtype_bods"
+#if str($output_select.output_selector) == "gene_idtype_bods"
     data(gene.idtype.bods)
-    #if output_select.gene_idtype_bods_select == "aga"
+    #if str($output_select.gene_idtype_bods_select) == "aga"
         write.table(gene.idtype.list[1], "$gene_idtype_bods_output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "ath"
+     #if str($output_select.gene_idtype_bods_select) == "ath"
         write.table(gene.idtype.list[2], "$gene_idtype_bods_output2", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "bta"
+     #if str($output_select.gene_idtype_bods_select) == "bta"
         write.table(gene.idtype.list[3], "$gene_idtype_bods_output3", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "cel"
+     #if str($output_select.gene_idtype_bods_select) == "cel"
         write.table(gene.idtype.list[4], "$gene_idtype_bods_output4", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "cfa"
+     #if str($output_select.gene_idtype_bods_select) == "cfa"
         write.table(gene.idtype.list[5], "$gene_idtype_bods_output5", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "dme"
+     #if str($output_select.gene_idtype_bods_select) == "dme"
         write.table(gene.idtype.list[6], "$gene_idtype_bods_output6", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "dre"
+     #if str($output_select.gene_idtype_bods_select) == "dre"
         write.table(gene.idtype.list[7], "$gene_idtype_bods_output7", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "eco"
+     #if str($output_select.gene_idtype_bods_select) == "eco"
         write.table(gene.idtype.list[8], "$gene_idtype_bods_output8", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "ecs"
+     #if str($output_select.gene_idtype_bods_select) == "ecs"
         write.table(gene.idtype.list[9], "$gene_idtype_bods_output9", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "gga"
+     #if str($output_select.gene_idtype_bods_select) == "gga"
         write.table(gene.idtype.list[10], "$gene_idtype_bods_output10", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "hsa"
+     #if str($output_select.gene_idtype_bods_select) == "hsa"
         write.table(gene.idtype.list[11], "$gene_idtype_bods_output11", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "mmu"
+     #if str($output_select.gene_idtype_bods_select) == "mmu"
         write.table(gene.idtype.list[12], "$gene_idtype_bods_output12", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "mcc"
+     #if str($output_select.gene_idtype_bods_select) == "mcc"
         write.table(gene.idtype.list[13], "$gene_idtype_bods_output13", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "pfa"
+     #if str($output_select.gene_idtype_bods_select) == "pfa"
         write.table(gene.idtype.list[14], "$gene_idtype_bods_output14", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "ptr"
+     #if str($output_select.gene_idtype_bods_select) == "ptr"
         write.table(gene.idtype.list[15], "$gene_idtype_bods_output15", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "rno"
+     #if str($output_select.gene_idtype_bods_select) == "rno"
         write.table(gene.idtype.list[16], "$gene_idtype_bods_output16", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "sce"
+     #if str($output_select.gene_idtype_bods_select) == "sce"
         write.table(gene.idtype.list[17], "$gene_idtype_bods_output17", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "ssc"
+     #if str($output_select.gene_idtype_bods_select) == "ssc"
         write.table(gene.idtype.list[18], "$gene_idtype_bods_output18", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
-     #if output_select.gene_idtype_bods_select == "xla"
+     #if str($output_select.gene_idtype_bods_select) == "xla"
         write.table(gene.idtype.list[19], "$gene_idtype_bods_output19", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
 #end if
-#if output_select == "cpd_simtypes"
+#if str($output_select.output_selector) == "cpd_simtypes"
     data(cpd.simtypes)
     write.table(cpd.simtypes, "$cpd_simtypes_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 #end if
+
 ]]>
         </configfile>
     </configfiles>
     <inputs>
         <conditional name="output_select">
-            <param name="output_selector" type="select" multiple="true" label="Which mapped data to output?" >
-                <option value="cpd_accs">cpd.accs</option>
+            <param name="output_selector" type="select" label="Which mapped data to output?" >
+                <option value="cpd_accs" selected="true">cpd.accs</option>
                 <option value="cpd_names">cpd.names</option>
                 <option value="kegg_met"></option>
                 <option value="ko_ids">KEGG ortholog gene IDs</option>
@@ -186,9 +188,13 @@ library(pathview)
                 <option value="gene_idtype_bods">common gene, transcript or protein ID types for the 19 major research species in bods</option>
                 <option value="cpd_simtypes">compound related ID types</option>
             </param>
+            <when value="cpd_accs"> </when>
+            <when value="cpd_names"> </when>
+            <when value="kegg_met"> </when>
+            <when value="ko_ids"> </when>
             <when value="rn_list">
-                <param name="rn_list_select" type="select" multiple="true" label="Which compound ID types to output?">
-                    <option value="rn_list1">Agricola citation</option>
+                <param name="rn_list_select" type="select" label="Which compound ID types to output?">
+                    <option value="rn_list1" selected="true">Agricola citation</option>
                     <option value="rn_list2">Beilstein Registry Number</option>
                     <option value="rn_list3">CAS Registry Number</option>
                     <option value="rn_list4">COMe accession</option>
@@ -211,9 +217,10 @@ library(pathview)
                     <option value="rn_list21">Wikipedia accession</option>
                 </param>
             </when>
+            <when value="gene_idtype_list"> </when>
             <when value="gene_idtype_bods">
-                <param name="gene_idtype_bods_select" type="select" multiple="true" label="Which specie to output?">
-                    <option value="aga">aga</option>
+                <param name="gene_idtype_bods_select" type="select" label="Which specie to output?">
+                    <option value="aga" selected="true">aga</option>
                     <option value="ath">ath</option>
                     <option value="bta">bta</option>
                     <option value="cel">cel</option>
@@ -234,6 +241,7 @@ library(pathview)
                     <option value="xla">xla</option>
                 </param>
             </when>
+            <when value="cpd_simtypes"> </when>
         </conditional>
     </inputs>
 
@@ -251,67 +259,67 @@ library(pathview)
             <filter>output_select['output_selector'] == 'ko_ids'</filter>
         </data>           
         <data name="rn_list_output1" format="txt" label="${tool.name} on ${on_string}: rn.list Agricola citation output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list1</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list1'</filter>
         </data>
         <data name="rn_list_output2" format="txt" label="${tool.name} on ${on_string}: rn.list Beilstein Registry Number output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list2</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list2'</filter>
         </data>
         <data name="rn_list_output3" format="txt" label="${tool.name} on ${on_string}: rn.list CAS Registry Number output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list3</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list3'</filter>
         </data>
         <data name="rn_list_output4" format="txt" label="${tool.name} on ${on_string}: rn.list COMe accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list4</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list4'</filter>
         </data>
         <data name="rn_list_output5" format="txt" label="${tool.name} on ${on_string}: rn.list ChEMBL COMPOUND output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list5</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list5'</filter>
         </data>
         <data name="rn_list_output6" format="txt" label="${tool.name} on ${on_string}: rn.list DrugBank accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list6</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list6'</filter>
         </data>
         <data name="rn_list_output7" format="txt" label="${tool.name} on ${on_string}: rn.list Gmelin Registry Number output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list7</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list7'</filter>
         </data>
         <data name="rn_list_output8" format="txt" label="${tool.name} on ${on_string}: rn.list HMDB accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list8</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list8'</filter>
         </data>
         <data name="rn_list_output9" format="txt" label="${tool.name} on ${on_string}: rn.list KEGG COMPOUND accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list9</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list9'</filter>
         </data>
         <data name="rn_list_output10" format="txt" label="${tool.name} on ${on_string}: rn.list KEGG DRUG accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list10</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list10'</filter>
         </data>
         <data name="rn_list_output11" format="txt" label="${tool.name} on ${on_string}: rn.list KEGG GLYCAN accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list11</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list11'</filter>
         </data>
         <data name="rn_list_output12" format="txt" label="${tool.name} on ${on_string}: rn.list LIPID MAPS instance accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list12</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list12'</filter>
         </data>
         <data name="rn_list_output13" format="txt" label="${tool.name} on ${on_string}: rn.list MetaCyc accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list13</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list13'</filter>
         </data>
         <data name="rn_list_output14" format="txt" label="${tool.name} on ${on_string}: rn.list MolBase accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list14</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list14'</filter>
         </data>
         <data name="rn_list_output15" format="txt" label="${tool.name} on ${on_string}: rn.list PDB accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list15</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list15'</filter>
         </data>
         <data name="rn_list_output16" format="txt" label="${tool.name} on ${on_string}: rn.list PDBeChem accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list16</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list16'</filter>
         </data>
         <data name="rn_list_output17" format="txt" label="${tool.name} on ${on_string}: rn.list Patent accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list17</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list17'</filter>
         </data>
         <data name="rn_list_output18" format="txt" label="${tool.name} on ${on_string}: rn.list PubMed citation output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list18</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list18'</filter>
         </data>
         <data name="rn_list_output19" format="txt" label="${tool.name} on ${on_string}: rn.list Reaxys Registry Number output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list19</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list19'</filter>
         </data>
         <data name="rn_list_output20" format="txt" label="${tool.name} on ${on_string}: rn.list UM-BBD compID output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list20</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list20'</filter>
         </data>
         <data name="rn_list_output21" format="txt" label="${tool.name} on ${on_string}: rn.list Wikipedia accession output" >
-            <filter>output_select['output_selector'] == 'rn_list' and output_select['output_selector']['rn_list_select'] == rn_list21</filter>
+            <filter>output_select['output_selector'] == 'rn_list' and output_select['rn_list_select'] == 'rn_list21'</filter>
         </data>
         <data name="gene_idtype_list_output" format="txt" label="${tool.name} on ${on_string}: gene.idtype.list output" >
             <filter>output_select['output_selector'] == 'gene_idtype_list'</filter>
@@ -378,6 +386,22 @@ library(pathview)
         </data>
     </outputs>
 
+    <tests>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="cpd_accs" />
+            </conditional>
+            <output name="cpd_accs_output" value="cpd.accs_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="rn_list" />
+                <param name="rn_list_select" value="rn_list1" />
+            </conditional>
+            <output name="rn_list_output1" value="rn.list_Agricola_citation_output.txt" />
+        </test>
+    </tests>
+
     <help><![CDATA[
 Mapping data between compound or gene IDs and KEGG accessions.
 
@@ -385,12 +409,12 @@ It returns:
 
 - `cpd.accs:` data frame with 30054 observations on the following 4 variables. 
 - `cpd.names:` data frame with 12314 observations on the following 5 variables. 
-- `kegg.met:' character matrix of 694 rows and 3 columns. 
+- `kegg.met:` character matrix of 694 rows and 3 columns. 
 - `ko.ids:` data frame of 8511 KEGG ortholog gene IDs, as used in KEGG ortholog pathways. 
 - `rn.list:` a namedlist of 21 data frames. Each data frame records the row numbers for one of 21 dfferent compound ID types in cpd.accs
 - `gene.idtype.list:` data frame of 13 common gene, transcript or protein ID types. Note some ID types are species specific, for example TAIR or ORF. 
 - `gene.idtype.bods:` data frame of common gene, transcript or protein ID types for the 19 major research species in bods. Each element corresponds to a species.
--`cpd.simtypes:` dataframe of 7 common compound related ID types, each of them has over 1000 unique entries. Hence these ID types are good for generating simulation compound data.
+- `cpd.simtypes:` dataframe of 7 common compound related ID types, each of them has over 1000 unique entries. Hence these ID types are good for generating simulation compound data.
     ]]></help>
     <expand macro="citations" />
 </tool>
