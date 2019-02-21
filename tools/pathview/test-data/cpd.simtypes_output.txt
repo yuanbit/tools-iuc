@@ -1,0 +1,7 @@
+Beilstein Registry Number
+CAS Registry Number
+ChEMBL COMPOUND
+KEGG COMPOUND accession
+KEGG DRUG accession
+Patent accession
+PubMed citation

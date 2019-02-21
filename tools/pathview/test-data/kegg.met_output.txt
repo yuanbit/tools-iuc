@@ -1,0 +1,695 @@
+accession name synonym
+C00577 D-Glyceraldehyde NA
+C02426 L-Glyceraldehyde NA
+C01796 D-Erythrose Ery
+C06463 D-Threose Tho
+C00216 D-Arabinose Ara
+C00259 L-Arabinose NA
+C00181 D-Xylose Xyl
+C01510 L-Xylose NA
+C00476 D-Lyxose Lyx
+C01508 L-Lyxose NA
+C00121 D-Ribose Rib
+C00031 D-Glucose Glc
+C00124 D-Galactose Gal
+C01825 L-Galactose NA
+C00159 D-Mannose Man
+C01487 D-Allose All
+C06464 D-Altrose Alt
+C06465 D-Gulose Gul
+C15923 L-Gulose NA
+C06466 D-Idose Ido
+C06467 D-Talose Tal
+C06474 3,6-Anhydrogalactose NA
+C06478 3,6-Anhydroglucose NA
+C00184 Dihydroxyacetone NA
+C02022 D-Erythrulose NA
+C02045 L-Erythrulose NA
+C00309 D-Ribulose NA
+C00508 L-Ribulose NA
+C00310 D-Xylulose Xul
+C00312 L-Xylulose NA
+C00095 D-Fructose Fru
+C01719 L-Fructose NA
+C00764 D-Sorbose Sor
+C00247 L-Sorbose NA
+C00795 D-Tagatose Tag
+C06468 D-Psicose NA
+C02076 Sedoheptulose Sed
+C19612 Coriose NA
+C01801 Deoxyribose NA
+C01018 D-Fucose Fuc
+C01019 L-Fucose NA
+C01684 D-Rhamnose Rha
+C00507 L-Rhamnose NA
+C00586 2-Deoxy-D-glucose NA
+C02522 D-Quinovose Qui
+C02781 2-Deoxy-D-galactose NA
+C06471 Abequose NA
+C00329 D-Glucosamine GlcN
+C02262 D-Galactosamine GalN
+C03570 D-Mannosamine ManN
+C15478 D-Fucosamine FucN
+C15479 D-Quinovosamine QuiN
+C06469 Neuraminic acid Neu
+C06470 Muramic acid Mur
+C00140 N-Acetyl-D-glucosamine GlcNAc
+C01132 N-Acetyl-D-galactosamine GalNAc
+C00645 N-Acetyl-D-mannosamine ManNAc
+C15480 N-Acetyl-D-fucosamine FucNAc
+C15481 N-Acetyl-D-quinovosamine QuiNAc
+C00270 N-Acetylneuraminic acid Neu5Ac
+C02713 N-Acetylmuramic acid MurNAc
+C03525 O-Acetylneuraminic acid NA
+C03410 N-Glycoloyl-neuraminate NA
+C00905 D-Fructuronic acid NA
+C00558 D-Tagaturonic acid NA
+C00191 D-Glucuronic acid GlcA
+C00333 D-Galacturonic acid GalA
+C02024 D-Mannuronic acid ManA
+C06472 L-Iduronic acid IdoA
+C06477 L-Guluronic acid NA
+C00257 D-Gluconic acid NA
+C03752 D-Glucosaminic acid NA
+C06473 2-Keto-D-gluconic acid NA
+C01187 3-Deoxy-D-manno-octulosonic acid NA
+C00089 Sucrose Cane sugar
+C00243 Lactose Milk sugar
+C00208 Maltose Malt sugar
+C00252 Isomaltose NA
+C01083 Trehalose NA
+C00185 Cellobiose NA
+C08240 Gentiobiose NA
+C19632 Kojibiose NA
+C02048 Laminaribiose NA
+C19633 Maltulose NA
+C01728 Mannobiose NA
+C05402 Melibiose NA
+C19634 Melibiulose NA
+C01518 Nigerose NA
+C01742 Palatinose NA
+C08247 Rutinose NA
+C19635 Scillabiose NA
+C19636 Turanose NA
+C01625 Vicianose NA
+C01630 Xylobiose NA
+C00058 Formic acid 1:0
+C00033 Acetic acid 2:0
+C00163 Propionic acid 3:0
+C00246 Butyric acid 4:0
+C00803 Valerianic acid 5:0
+C01585 Caproic acid 6:0
+C06423 Caprylic acid 8:0
+C01571 Capric acid 10:0
+C02679 Lauric acid 12:0
+C06424 Myristic acid 14:0
+C00249 Palmitic acid 16:0
+C01530 Stearic acid 18:0
+C06425 Arachidic acid 20:0
+C08281 Behenic acid 22:0
+C08320 Lignoceric acid 24:0
+C00712 Oleic acid 18:1;9
+C01712 Elaidic acid 18:1;9
+C16526 Icosenoic acid 20:1;11
+C08316 Erucic acid 22:1;13
+C08323 Nervonic acid 24:1;15
+C01595 Linoleic acid 18:2;9,12
+C16525 Icosadienoic acid 20:2;11,14
+C16533 Docosadienoic acid 22:2;13,16
+C06426 gamma-Linolenic acid 18:3;6,9,12
+C06427 alpha-Linolenic acid 18:3;9,12,15
+C00219 Arachidonic acid 20:4;5,8,11,14
+C06428 Eicosapentaenoic acid 20:5;5,8,11,14.17
+C06429 Docosahexaenoic acid 22:6;4,7,10,13,16,19
+C00116 Glycerol NA
+C01885 1-Monoacylglycerol NA
+C02112 2-Monoacylglycerol NA
+C00641 1,2-Diacylglycerol NA
+C06437 1,3-Diacylglycerol NA
+C00422 Triacylglycerol NA
+C00416 Phosphatidic acid NA
+C00350 Phosphatidylethanolamine NA
+C00157 Phosphatidylcholine Lecithin
+C02737 Phosphatidylserine NA
+C01194 Phosphatidylinositol NA
+C04230 2-Lysolecithin NA
+C04756 Plasmenylethanolamine NA
+C00958 Plasmenylcholine NA
+C00344 Phosphatidylglycerol NA
+C05980 Diphosphatidylglycerol Cardiolipin
+C00550 Sphingomyelin NA
+C01190 Glucosylceramide NA
+C02686 Galactosylceramide NA
+C01290 Lactosylceramide NA
+C04911 GM1 NA
+C04884 GM2 NA
+C04730 GM3 NA
+C02064 Prostanoic acid NA
+C04685 Prostaglandin A1 NA
+C05953 Prostaglandin A2 NA
+C00959 Prostaglandin B1 NA
+C05954 Prostaglandin B2 NA
+C04686 Prostaglandin C1 NA
+C05955 Prostaglandin C2 NA
+C06438 Prostaglandin D1 NA
+C00696 Prostaglandin D2 NA
+C04741 Prostaglandin E1 NA
+C00584 Prostaglandin E2 NA
+C06439 Prostaglandin E3 NA
+C06475 Prostaglandin F1alpha NA
+C00639 Prostaglandin F2alpha NA
+C02314 Prostaglandin F2beta NA
+C06476 Prostaglandin F3alpha NA
+C05956 Prostaglandin G2 NA
+C00427 Prostaglandin H2 NA
+C01312 Prostaglandin I2 NA
+C05957 Prostaglandin J2 NA
+C00909 Leukotriene A4 NA
+C02165 Leukotriene B4 NA
+C02166 Leukotriene C4 NA
+C05951 Leukotriene D4 NA
+C05952 Leukotriene E4 NA
+C06462 Leukotriene F4 NA
+C05356 5-HPETE NA
+C02198 Thromboxane A2 NA
+C05963 Thromboxane B2 NA
+C05964 11-Dehydro-thromboxane B2 NA
+G10481 Cellulose NA
+G10495 Amylose NA
+G04981 Inulin NA
+G10483 Chitin NA
+G10536 Chitosan NA
+G11610 Amylopectin NA
+G11603 Glycogen NA
+G10591 Pectin NA
+G11598 Glucomannan NA
+G11599 Galactoglucomannan NA
+G11622 Xyloglucan NA
+G11623 4-O-Methylglucuronoxylan NA
+G11619 Arabinoxylan NA
+G11624 4-O-Methylglucuronoarabinoxylran NA
+G11334 Chondroitin NA
+G10505 Hyaluronic acid NA
+G10593 Alginic acid NA
+C00147 Adenine Ade
+C00242 Guanine Gua
+C00106 Uracil Ura
+C00178 Thymine Thy
+C00380 Cytosine Cyt
+C00212 Adenosine A
+C00387 Guanosine G
+C00299 Uridine U
+C00475 Cytidine C
+C00559 Deoxyadenosine dA
+C00330 Deoxyguanosine dG
+C00526 Deoxyuridine dU
+C00214 Deoxythymidine dT
+C00881 Deoxycytidine dC
+C00020 AMP NA
+C00008 ADP NA
+C00002 ATP NA
+C00144 GMP NA
+C00035 GDP NA
+C00044 GTP NA
+C00105 UMP NA
+C00015 UDP NA
+C00075 UTP NA
+C00055 CMP NA
+C00112 CDP NA
+C00063 CTP NA
+C00360 dAMP NA
+C00206 dADP NA
+C00131 dATP NA
+C00362 dGMP NA
+C00361 dGDP NA
+C00286 dGTP NA
+C00365 dUMP NA
+C01346 dUDP NA
+C00460 dUTP NA
+C00364 dTMP NA
+C00363 dTDP NA
+C00459 dTTP NA
+C00239 dCMP NA
+C00705 dCDP NA
+C00458 dCTP NA
+C00575 3',5'-Cyclic AMP NA
+C00942 3',5'-Cyclic GMP NA
+C00943 3',5'-Cyclic IMP NA
+C00968 3',5'-Cyclic dAMP NA
+C02507 3',5'-Cyclic dGMP NA
+C00941 3',5'-Cyclic CMP NA
+C02353 2',3'-Cyclic AMP NA
+C06194 2',3'-Cyclic GMP NA
+C02354 2',3'-Cyclic CMP NA
+C02355 2',3'-Cyclic UMP NA
+C00037 Glycine Gly
+C00041 Alanine Ala
+C00183 Valine Val
+C00123 Leucine Leu
+C00407 Isoleucine Ile
+C00049 Aspartic acid Asp
+C00152 Asparagine Asn
+C00025 Glutamic acid Glu
+C00064 Glutamine Gln
+C00065 Serine Ser
+C00188 Threonine Thr
+C00073 Methionine Met
+C00097 Cysteine Cys
+C00047 Lysine Lys
+C00062 Arginine Arg
+C00135 Histidine His
+C00148 Proline Pro
+C00079 Phenylalanine Phe
+C00082 Tyrosine Tyr
+C00078 Tryptophan Trp
+C05688 Selenocysteine Sec
+C16138 Pyrrolysine Pyl
+C00077 L-Ornithine NA
+C00155 L-Homocysteine NA
+C00263 L-Homoserine NA
+C00327 L-Citrulline NA
+C00606 3-Sulfino-L-alanine NA
+C03406 L-Argininosuccinate NA
+C00355 3,4-Dihydroxy-L-phenylalanine NA
+C02515 3-Iodo-L-tyrosine NA
+C01060 3,5-Diiodo-L-tyrosine NA
+C02465 Triiodothyronine NA
+C01829 L-Thyroxine NA
+C00099 beta-Alanine NA
+C00334 gamma-Aminobutyric acid NA
+C05145 3-Aminoisobutyric acid NA
+C00133 D-Alanine NA
+C06417 D-Valine NA
+C01570 D-Leucine NA
+C06418 D-Isoleucine NA
+C00402 D-Aspartic acid NA
+C01905 D-Asparagine NA
+C00217 D-Glutamic acid NA
+C00819 D-Glutamine NA
+C00740 D-Serine NA
+C00820 D-Threonine NA
+C00855 D-Methionine NA
+C00793 D-Cysteine NA
+C00739 D-Lysine NA
+C00792 D-Arginine NA
+C06419 D-Histidine NA
+C00763 D-Proline NA
+C02265 D-Phenylalanine NA
+C06420 D-Tyrosine NA
+C00525 D-Tryptophan NA
+C01879 Pidolic acid NA
+C01157 Hydroxyproline NA
+C01420 Cystine NA
+C03145 N-Formylmethionine NA
+C00189 Ethanolamine NA
+C01678 Cysteamine NA
+C03194 Aminopropanol NA
+C00099 beta-Alanine NA
+C00334 gamma-Aminobutyric acid GABA
+C00388 Histamine NA
+C03758 Dopamine NA
+C00780 Serotonin NA
+C00134 Putrescine NA
+C01137 S-Adenosylmethioninamine NA
+C00483 Tyramine NA
+C05332 Phenethylamine NA
+C00473 Retinol Vitamin A
+C05441 Ergocalciferol Vitamin D2
+C05443 Cholecalciferol Vitamin D3
+C02477 alpha-Tocopherol Vitamin E
+C02059 Phylloquinone Vitamin K1
+C00828 Menaquinone Vitamin K2
+C05377 Menadione Vitamin K3
+C00378 Thiamine Vitamin B1
+C00255 Riboflavin Vitamin B2
+C00253 Nicotinic acid Vitamin B3
+C00153 Nicotinamide Vitamin B3
+C00864 Pantothenic acid Vitamin B5
+C00250 Pyridoxal Vitamin B6
+C00314 Pyridoxine Vitamin B6
+C00534 Pyridoxamine Vitamin B6
+C00120 Biotin Vitamin B7
+C00504 Folic acid Vitamin B9
+C05776 Cobalamin(III) Vitamin B12
+C00072 Ascorbic acid Vitamin C
+C00002 ATP NA
+C00063 CTP NA
+C00019 SAM NA
+C04628 Coenzyme B NA
+C05777 Coenzyme F430 NA
+C19637 Coenzyme M NA
+C11378 Coenzyme Q10 NA
+C00051 Glutathione NA
+C00862 Methanofuran NA
+C00053 PAPS NA
+C00272 Tetrahydrobiopterin NA
+C01217 5,6,7,8-Tetrahydromethanopterin NA
+C15670 Heme A NA
+C15817 Heme C NA
+C15672 Heme O NA
+C00725 Lipoate NA
+C05924 Molybdopterin NA
+C00113 PQQ NA
+C19639 Gonane NA
+C19638 5alpha-Gonane NA
+C19640 5beta-Gonane NA
+C19641 Estrane NA
+C12811 Allylestrenol NA
+C02537 Estradiol-17alpha NA
+C00951 Estradiol-17beta NA
+C05141 Estriol NA
+C00468 Estrone NA
+C14593 Epimestrol NA
+C14392 Equilin NA
+C14303 Equilenin NA
+C15201 5beta-Estrane-3alpha,17beta-diol NA
+C11228 Estramustine NA
+C05301 2-Hydroxyestradiol NA
+C03935 6beta-Hydroxyestradiol-17beta NA
+C05302 2-Methoxyestradiol-17beta NA
+C14257 Methyltrienolone NA
+C07652 Mifepristone NA
+C07254 Nandrolone NA
+C14261 Trenbolone NA
+C01554 5alpha-Androstane NA
+C05285 Adrenosterone NA
+C00523 Androsterone NA
+C03772 5beta-Androstane-3,17-dione NA
+C07632 Androstanediol NA
+C15638 3-Androstanol NA
+C04295 Androstenediol NA
+C00280 Androstenedione NA
+C14210 4-Androstenediol NA
+C01227 Dehydroepiandrosterone NA
+C03917 Dihydrotestosterone NA
+C04373 Etiocholanolone NA
+C07346 Oxandrolone NA
+C07393 Oxymetholone NA
+C07311 Stanozolol NA
+C02197 Testolactone NA
+C00535 Testosterone NA
+C01523 Pregnane NA
+C01780 Aldosterone NA
+C06848 Betamethasone NA
+C06842 Beclomethasone NA
+C02140 Corticosterone NA
+C00735 Cortisol NA
+C00762 Cortisone NA
+C06938 Danazol NA
+C15643 Dexamethasone NA
+C03205 11-Deoxycorticosterone NA
+C14487 Ethisterone NA
+C07006 Fluocinolone NA
+C07007 Fluocinonide NA
+C14629 Fluorometholone 17-acetate NA
+C07120 Megestrol NA
+C05028 Norethindrone NA
+C14249 Norethynodrel NA
+C08153 Norgestrel NA
+C07369 Prednisolone NA
+C07370 Prednisone NA
+C01953 Pregnenolone NA
+C00410 Progesterone NA
+C07310 Spironolactone NA
+C19658 Cardanolide NA
+C08859 Cymarin NA
+C08866 Gitoxin NA
+C08876 Neriifolin NA
+C06955 Digitoxin NA
+C06956 Digoxin NA
+C01443 Ouabain NA
+C19659 5alpha-Cholane NA
+C15375 Apocholic acid NA
+C02528 Chenodeoxycholate NA
+C03070 3-Oxo-5beta-cholanate NA
+C00695 Cholic acid NA
+C19642 5beta-Cholanic acid NA
+C13154 Dehydrocholic acid NA
+C04483 Deoxycholic acid NA
+C01921 Glycocholate NA
+C15517 Hyodeoxycholate NA
+C03990 Lithocholic acid NA
+C05122 Taurocholate NA
+C07880 Ursodiol NA
+C19660 Bufanolide NA
+C16921 Bufadienolide NA
+C16922 Bufalin NA
+C16923 Bufotalin NA
+C16931 Cinobufagin NA
+C16932 Cinobufotalin NA
+C16962 Gamabufogenin NA
+C12816 Proscillaridin NA
+C19643 Scillarenin NA
+C08880 Scilliroside NA
+C17072 Telocinobufagin NA
+C19661 Cholestane NA
+C15337 Allocholesterol NA
+C00187 Cholesterol NA
+C01164 7-Dehydrocholesterol NA
+C01802 Desmosterol NA
+C00477 Ecdysone NA
+C19662 Spirostan NA
+C08896 Digitogenin NA
+C08898 Diosgenin NA
+C08899 Gitogenin NA
+C03963 Sarsasapogenin NA
+C08913 Smilagenin NA
+C08914 Tigogenin NA
+C19663 Furostan NA
+C04715 Nuatigenin NA
+C19648 Pseudotigogenin NA
+C19649 Pseudosarsasapogenin NA
+C19650 Pseudosmilagenin NA
+C19664 Ergostane NA
+C19651 Ergostanol NA
+C19652 alpha-Ergostenol NA
+C01694 Ergosterol NA
+C19653 Lumisterol NA
+C19665 5alpha-Campestane NA
+C08814 Brassinolide NA
+C15787 Campestanol NA
+C01789 Campesterol NA
+C19666 Stigmastane NA
+C08817 Fucosterol NA
+C19644 Stigmastanol NA
+C05442 Stigmasterol NA
+C19667 5alpha-Poriferastane NA
+C08836 Poriferasterol NA
+C19654 gamma-Sitosterol NA
+C19668 Gorgostane NA
+C19657 Acanthasterol NA
+C19655 Gorgosterol NA
+C19656 Sarcoaldesterol A NA
+C16086 Prolactin-releasing peptide-31 NA
+C16087 Prolactin-releasing peptide-20 NA
+C03958 Thyrotropin-releasing hormone NA
+C07607 Gonadotropin-releasing hormone I NA
+C16084 Gonadotropin-releasing hormone II NA
+C16085 Growth hormone-releasing hormone 1-29
+C16022 Somatostatin-14 NA
+C16021 Somatostatin-28 NA
+C16079 Corticotropin releasing hormone NA
+C16115 Gastrin-releasing peptide NA
+C16030 Melanin-concentrating hormone NA
+C16025 Ghrelin NA
+C00746 Oxytocin NA
+C13662 Arg-vasopressin NA
+C02017 Corticotropin NA
+C02758 alpha-Melanotropin NA
+C16136 beta-Melanotropin NA
+C16137 gamma-Melanotropin NA
+C18181 Growth hormone NA
+C18201 Prolactin NA
+C18182 Thyroid stimulating hormone NA
+C18183 Luteinizing hormone NA
+C18184 Follicle stimulating hormone NA
+C18185 Chorionic gonadotropin NA
+C06865 Calcitonin NA
+C16051 Parathyroid hormone NA
+C16003 Atrial natriuretic peptide NA
+C16004 Brain natriuretic peptide NA
+C16005 C-Type natriuretic peptide NA
+C16010 Endothelin-1 NA
+C16012 Endothelin-2 NA
+C16013 Endothelin-3 NA
+C01501 Glucagon NA
+C00723 Insulin NA
+C16130 Amylin NA
+C16118 Peptide YY NA
+C18186 Gastrin-14 NA
+C16113 Gastrin-17 NA
+C18187 Gastrin-34 NA
+C16114 Cholecystokinin-8 NA
+C16133 Cholecystokinin-33 NA
+C16047 Motilin NA
+C13523 Secretin NA
+C16065 Thymosin alpha-1 NA
+C16066 Thymosin beta-4 NA
+C16067 Thymosin beta-10 NA
+C16131 Insulin-like growth factor I NA
+C16132 Insulin-like growth factor II NA
+C18200 Erythropoietin NA
+C00873 Angiotensin I NA
+C02135 Angiotensin II NA
+C15848 Angiotensin III NA
+C15849 Angiotensin IV NA
+C00306 Bradykinin NA
+C18188 Leptin NA
+C18189 Adiponectin NA
+C18190 Resistin NA
+C00280 Androstenedione NA
+C05291 7alpha-Hydroxytestosterone NA
+C00535 Testosterone NA
+C01227 Dehydroepiandrosterone NA
+C03917 Dihydrotestosterone NA
+C04555 Dehydroepiandrosterone sulfate NA
+C05294 19-Hydroxytestosterone NA
+C00468 Estrone NA
+C00951 Estradiol-17beta NA
+C02538 Estrone 3-sulfate NA
+C05141 Estriol NA
+C05300 16alpha-Hydroxyestrone NA
+C00410 Progesterone NA
+C01176 17alpha-Hydroxyprogesterone NA
+C01953 Pregnenolone NA
+C05138 17alpha-Hydroxypregnenolone NA
+C00735 Cortisol NA
+C00762 Cortisone NA
+C05488 11-Deoxycortisol NA
+C05470 Tetrahydrocortisone NA
+C05497 21-Deoxycortisol NA
+C01124 18-Hydroxycorticosterone NA
+C01780 Aldosterone NA
+C02140 Corticosterone NA
+C03205 11-Deoxycorticosterone NA
+C05490 11-Dehydrocorticosterone NA
+C01673 Calcitriol Vitamin D
+C00477 Ecdysone NA
+C01598 Melatonin NA
+C01829 Thyroxine NA
+C02465 Triiodothyronine NA
+C00788 Adrenaline NA
+C00547 Noradrenaline NA
+C03758 Dopamine NA
+C00388 Histamine NA
+C01996 Acetylcholine NA
+C00037 Glycine NA
+C00049 Aspartate NA
+C00025 Glutamate NA
+C00334 GABA NA
+C00355 Dopa NA
+C03758 Dopamine NA
+C00788 Epinephrine Adrenaline
+C00547 Norepinephrine Noradrenaline
+C00780 Serotonin NA
+C00388 Histamine NA
+C01829 Thyroxine NA
+C05851 Coumarin NA
+C10874 Podophyllotoxin NA
+C01451 Salicin NA
+C10882 Sesamin NA
+C09947 Kawain NA
+C09010 Khellin NA
+C01864 Methoxsalen NA
+C10404 Sennoside A NA
+C13526 Sennoside B NA
+C06956 Digoxin NA
+C07667 Gossypol NA
+C06078 Limonene NA
+C07394 Paclitaxel NA
+C01479 Atropine NA
+C00757 Berberine NA
+C01897 Camptothecin NA
+C01416 Cocaine NA
+C07592 Colchicine NA
+C09421 Emetine NA
+C01575 Ephedrine NA
+C07544 Ergotamine NA
+C01516 Morphine NA
+C06535 Physostigmine NA
+C06526 Quinine NA
+C06539 Reserpine NA
+C01851 Scopolamine NA
+C06522 Strychnine NA
+C19906 omega-Conotoxin NA
+C11280 Dolastatin 10 NA
+C16905 Dolastatin 11 NA
+C19899 Dolastatin 15 NA
+C16876 Kahalalide F NA
+C12819 Kainic acid NA
+C16862 Plitidepsin NA
+C19902 Contignasterol NA
+C19900 12-epi-Scalaradial NA
+C19901 Luffariellolide NA
+C17156 Manoalide NA
+C19897 Debromohymenialdisine NA
+C19905 DMXB-A NA
+C19898 Manzamine A NA
+C17208 Neosaxitoxin NA
+C13757 Saxitoxin NA
+C11692 Tetrodotoxin NA
+C05149 Bryostatin 1 NA
+C05370 Calyculin A NA
+C16877 Cryptophycin 1 NA
+C16746 Discodermolide NA
+C16881 Isohomohalichondrin B NA
+C16883 Jasplakinolide NA
+C16892 KRN 7000 NA
+C19903 Lasonolide A NA
+C16901 Latrunculin A NA
+C19904 Latrunculin B NA
+C16902 Mycalolide B NA
+C01945 Okadaic acid NA
+C16841 Squalamine NA
+C16875 Trabectedin NA
+C05551 Penicillin G NA
+C06574 Ampicillin NA
+C00916 Cephalosporin C NA
+C06566 Cephamycin C NA
+C06880 Cefazolin NA
+C06683 Ceftriaxone NA
+C06662 Clavulanic acid NA
+C06664 Thienamycin NA
+C06665 Imipenem NA
+C01941 Nocardicin A NA
+C06840 Aztreonam NA
+C00413 Streptomycin NA
+C02078 Spectinomycin NA
+C00304 Kanamycin NA
+C01918 Gentamicin C NA
+C01737 Neomycin B NA
+C17585 Butirosin A NA
+C01912 Erythromycin NA
+C01946 Oleandomycin NA
+C01457 Tylosin NA
+C06690 Candicidin D NA
+C11222 Geldanamycin NA
+C12247 Rifamycin W NA
+C06688 Rifampicin NA
+C06570 Tetracycline NA
+C06570 Tetracycline NA
+C01661 Adriamycin NA
+C06691 Actinorhodine NA
+C06764 Tetranactin NA
+C06693 Monensin NA
+C06686 Griseofulvin NA
+C06689 Vancomycin NA
+C12046 Teicoplanin A2-2 NA
+C01895 Bleomycin B2 NA
+C15482 Bacitracin A NA
+C06684 Valinomycin NA
+C11612 Polymyxin B NA
+C06770 Actinomycin D NA
+C05079 Nalidixic acid NA
+C06687 Norfloxacin NA
+C06763 Nojirimycin NA
+C06765 Flavomycin NA
+C06682 Cycloserine NA
+C06692 Polyoxin B NA
+C06685 Cycloheximide NA
+C06694 Fusidic acid NA
+C00918 Chloramphenicol NA
+C05080 Novobiocin NA
+C06454 Fosfomycin NA
+C06681 Mitomycin NA
+C06695 2-Oxazolidinone NA

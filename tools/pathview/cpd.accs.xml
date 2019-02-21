@@ -35,12 +35,11 @@ library(pathview)
 #end if
 #if str($output_select.output_selector) == "ko_ids"
     data(ko.ids)
-    write.table(ko.ids, "$kegg_met_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+    write.table(ko.ids, "$ko_ids_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 #end if
 #if str($output_select.output_selector) == "rn_list"
     data(rn.list)
     #if str($output_select.rn_list_select) == "rn_list1"
-        print("hi")
         write.table(rn.list[1], "$rn_list_output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
     #if str($output_select.rn_list_select) == "rn_list2"
@@ -395,6 +394,24 @@ library(pathview)
         </test>
         <test expect_num_outputs="1">
             <conditional name="output_select">
+                <param name="output_selector" value="cpd_names" />
+            </conditional>
+            <output name="cpd_simtypes_output" value="cpd.names_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="kegg_met" />
+            </conditional>
+            <output name="kegg_met_output" value="kegg.met_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="ko_ids" />
+            </conditional>
+            <output name="ko_ids_output" value="ko.ids_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
                 <param name="output_selector" value="rn_list" />
                 <param name="rn_list_select" value="rn_list1" />
             </conditional>
@@ -402,10 +419,22 @@ library(pathview)
         </test>
         <test expect_num_outputs="1">
             <conditional name="output_select">
+                <param name="output_selector" value="gene_idtype_list" />
+            </conditional>
+            <output name="gene_idtype_list" value="gene.idtype.list_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="output_select">
                 <param name="output_selector" value="gene_idtype_bods" />
                 <param name="gene_idtype_bods_select" value="aga" />
             </conditional>
             <output name="gene_idtype_bods_output1" value="gene.idtype.bods_aga_output.txt" />
+        </test>
+         <test expect_num_outputs="1">
+            <conditional name="output_select">
+                <param name="output_selector" value="cpd_simtypes" />
+            </conditional>
+            <output name="cpd_simtypes_output" value="cpd.simtypes_output.txt" />
         </test>
     </tests>
 
