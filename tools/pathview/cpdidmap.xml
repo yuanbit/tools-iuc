@@ -1,0 +1,92 @@
+<tool id="pathview_cpdidmap" name="cpdidmap" version="@VERSION@.0">
+    <description>with pathview</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <conditional name="in_ids_select">
+            <param name="in_ids_selector" type="select" label="Specifiy a single ID or multiple input IDs to be mapped?" >
+                <option value="single">Single ID</option>
+                <option value="multiple">Mutiple IDs</option>
+            </param>
+            <when value="single">
+                <param name="in_ids" type="text" label="Input ID to be mapped" />
+            </when>
+            <when value="multiple">
+                <param name="in_ids" type="data" label="Input IDs to be mapped" help="Dataframe with a column of IDs" />
+            </when>
+        </conditional>
+        <conditional name="in_type_select">
+            <param name="in_type_selector" type="select" label="Specifiy the type of a single ID or multiple input IDs?" help="The input ID type, needs to be either KEGG (including compound, glycan and durg) or one of the compound-related ID types used in CHEMBL database obtained from rn.list">
+                <option value="single">Single ID</option>
+                <option value="multiple">Mutiple IDs</option>
+            </param>
+            <when value="single">
+                <param name="in_type" type="text" value="KEGG" label="Input ID type" />
+            </when>
+            <when value="multiple">
+                <param name="in_type" type="data" label="Input IDs types" help="Dataframe with a column of IDs" />
+            </when>
+        </conditional>
+
+
+        
+in.type character, the input ID type, needs to be either "KEGG" (including compound,
+glycan and durg) or one of the compound-related ID types used in CHEMBL
+database. For a full list of the CHEMBL IDs, do data(rn.list); names(rn.list).
+For cpdkegg2name), default in.type = "KEGG".
+
+out.type character, the output ID type, needs to be either "KEGG" (including compound/glycan/durg)
+or one of the compound-related ID types used in CHEMBL database. For a full
+list of the CHEMBL IDs, do data(rn.list); names(rn.list).
+
+    </inputs>
+
+    <outputs>
+      
+    </outputs>
+
+    <tests>
+
+    </tests>
+
+    <help><![CDATA[
+
+These auxillary compound ID mappers connect KEGG compound/glycan/drug accessions to compound names/synonyms and other commonly used compound-related IDs.
+
+Function cpd2kegg does this mapping by calling cpdname2kegg or cpdidmap. On the other hand,
+we frequently want to check or show compound full names or other commonly used IDs instead
+of the less informative KEGG accessions when working with KEGG compound nodes, Functions
+cpdkegg2name and cpdidmap do this reverse mapping. These functions are written as part of the
+Pathview mapper module, they are equally useful for other compound ID or data mapping tasks.
+
+The use of these functions depends on a few data objects: "cpd.accs", "cpd.names", "keg.met" and
+"rn.list", which are included in this package. To access them, use data() function
+
+It returns:
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

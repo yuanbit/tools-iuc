@@ -1,0 +1,55 @@
+<tool id="pathview_download.kegg" name="download.kegg" version="@VERSION@.0">
+    <description>with pathview</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="pathway_id" type="text" value="00010" label=" 5-digit KEGG pathway IDs" />
+        <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name)" />
+        <param name="file_type" type="select" label="Select the output type">
+            <option value="xml">KEGG pathway data file (xml)</option>
+            <option value="image" selected="true">Image file (png)</option>
+        </param>
+    </inputs>
+
+    <outputs>
+      
+    </outputs>
+
+    <tests>
+
+    </tests>
+
+    <help><![CDATA[
+
+Download KEGG pathways.
+
+It returns:
+
+-graph images and associated KGML data
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
