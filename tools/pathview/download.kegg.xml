@@ -21,6 +21,11 @@ loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 ## Import library
 library(pathview)
 
+pathway_id = "$pathway_id"
+species = "$species"
+file_type = "$file_type"
+
+download.kegg(pathway.id = pathway_id, species = species, kegg.dir = ".", file.type= file_type)
 
 ]]>
         </configfile>
@@ -35,7 +40,9 @@ library(pathview)
     </inputs>
 
     <outputs>
-      
+         <data name="out_png" format="png" from_work_dir="hsa00010.png" label="${tool.name} on ${on_string}: Output image file">
+            <filter>o == "png"</filter>
+        </data>
     </outputs>
 
     <tests>

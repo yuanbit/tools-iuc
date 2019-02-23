@@ -1,0 +1,80 @@
+<tool id="pathview_kegg.species.code" name="kegg.species.code" version="@VERSION@.0">
+    <description>maps species name to KEGG code</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+species = "$species"
+
+#if str($na_rm) != ""
+    na_rm = TRUE
+#else
+    na_rm = FALSE
+#end if
+
+#if str($code_only) != ""
+    code_only = TRUE
+#else
+    code_only = FALSE
+#end if
+
+kcode = kegg.species.code(species = species, na.rm = na_rm, code.only = code_only)
+
+write.table(kcode, "$cpd_accs_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <conditional name="species_select">
+            <param name="species_selector" type="select" label="Specify a single or multiple species?"  help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name)">
+                <option value="single">Single</option>
+                <option value="multiple">Multiple</option>
+            </param>
+            <when value="single">
+                <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" />
+            </when>
+            <when value="multiple">
+                <param name="species" type="data" label="KEGG code, the scientific name, or the common name of the target species" help="Dataframe with a column of species" />
+            </when>
+        </conditional>
+        <param name="na_rm" type="boolean" truevalue="true" falsevalue="" checked="false" label="Remove unmapped entries?" />
+        <param na="code_only" type="boolean" truevalue="true" falsevalue="" checked="true" label="Extract KEGG species code only?" help="Select no to extract KEGG species code with gene ID usage information too" />
+    </inputs>
+
+    <outputs>
+        <data name="kcode_output" format="txt" label="${tool.name} on ${on_string}: output" />
+    </outputs>
+
+    <tests>
+
+    </tests>
+
+    <help><![CDATA[
+
+This function maps species name to KEGG code.
+
+It returns:
+
+-a dataframe with one column of mapped KEGG code of species
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
