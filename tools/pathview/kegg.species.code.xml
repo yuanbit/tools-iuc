@@ -21,7 +21,19 @@ loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 ## Import library
 library(pathview)
 
-species = "$species"
+#if str($species_select.species_selector) == "single"
+    species = "$species_select.species"
+#else
+    species <- c()
+    con = file("$species_select.species", "r")
+        while(TRUE){
+            line = readLines(con, n=1)
+            if(length(line) == 0) {
+                break
+            }
+            species <- c(species, line)
+        }
+#end if
 
 #if str($na_rm) != ""
     na_rm = TRUE
@@ -37,7 +49,7 @@ species = "$species"
 
 kcode = kegg.species.code(species = species, na.rm = na_rm, code.only = code_only)
 
-write.table(kcode, "$cpd_accs_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+write.table(kcode, "$kcode_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 
 ]]>
         </configfile>
@@ -52,11 +64,11 @@ write.table(kcode, "$cpd_accs_output", row.name=FALSE, col.name=TRUE, quote=FALS
                 <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" />
             </when>
             <when value="multiple">
-                <param name="species" type="data" label="KEGG code, the scientific name, or the common name of the target species" help="Dataframe with a column of species" />
+                <param name="species" type="data" format="tabular" label="KEGG code, the scientific name, or the common name of the target species" help="Dataframe with a column of species" />
             </when>
         </conditional>
         <param name="na_rm" type="boolean" truevalue="true" falsevalue="" checked="false" label="Remove unmapped entries?" />
-        <param na="code_only" type="boolean" truevalue="true" falsevalue="" checked="true" label="Extract KEGG species code only?" help="Select no to extract KEGG species code with gene ID usage information too" />
+        <param name="code_only" type="boolean" truevalue="true" falsevalue="" checked="true" label="Extract KEGG species code only?" help="Select no to extract KEGG species code with gene ID usage information too" />
     </inputs>
 
     <outputs>
@@ -64,7 +76,24 @@ write.table(kcode, "$cpd_accs_output", row.name=FALSE, col.name=TRUE, quote=FALS
     </outputs>
 
     <tests>
-
+        <test>
+            <conditional name="species_select">
+                <param name="species_selector" value="single"/>
+                <param name="species" value="hsa" />
+            </conditional>
+            <param name="na_rm" value="false" />
+            <param name="code_only" value="true" />
+            <output name="kcode_output" value="kcode_output1.txt" />
+        </test>
+        <test>
+            <conditional name="species_select">
+                <param name="species_selector" value="multiple"/>
+                <param name="species" value="species.tabular" />
+            </conditional>
+            <param name="na_rm" value="false" />
+            <param name="code_only" value="true" />
+            <output name="kcode_output" value="kcode_output2.txt" />
+        </test>
     </tests>
 
     <help><![CDATA[
