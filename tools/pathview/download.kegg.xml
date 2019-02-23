@@ -57,7 +57,7 @@ Download KEGG pathways.
 
 It returns:
 
--graph images and associated KGML data
+- graph images and associated KGML data
 
     ]]></help>
     <expand macro="citations" />

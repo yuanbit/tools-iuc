@@ -102,7 +102,7 @@ This function maps species name to KEGG code.
 
 It returns:
 
--a dataframe with one column of mapped KEGG code of species
+- a dataframe with one column of mapped KEGG code of species
 
     ]]></help>
     <expand macro="citations" />

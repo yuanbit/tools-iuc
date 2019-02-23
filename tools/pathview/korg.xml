@@ -76,9 +76,9 @@ Mapping data on KEGG species, including taxonomy IDs, KEGG code, scientific name
 
 It returns:
 
--`korg:` a character matrix of ~4800 rows and 10 columns. First 5 columns are KEGG and NCBI taxonomy IDs, KEGG species code, scientific name and common name, followed columns on gene ID types used for each species: entrez.gnodes ("1" or "0", whether EntrezGene is the default gene ID) and representative KEGG gene ID, NCBI or Entrez Gene ID, NCBI protein and Uniprot ID. Note korg includes 4800 KEGG species (as of 06/2017), in the meantime, an updated version of korg is now checked out from Pathview Web server each time pathview package is loaded
+- `korg:` a character matrix of ~4800 rows and 10 columns. First 5 columns are KEGG and NCBI taxonomy IDs, KEGG species code, scientific name and common name, followed columns on gene ID types used for each species: entrez.gnodes ("1" or "0", whether EntrezGene is the default gene ID) and representative KEGG gene ID, NCBI or Entrez Gene ID, NCBI protein and Uniprot ID. Note korg includes 4800 KEGG species (as of 06/2017), in the meantime, an updated version of korg is now checked out from Pathview Web server each time pathview package is loaded
 
--`bods:` character matrix of 19 rows and 3 columns on the mapping between gene annotation package names in Bioconductor, common name and KEGG code of most common research species
+- `bods:` character matrix of 19 rows and 3 columns on the mapping between gene annotation package names in Bioconductor, common name and KEGG code of most common research species
 
     ]]></help>
     <expand macro="citations" />

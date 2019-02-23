@@ -21,33 +21,197 @@ loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 ## Import library
 library(pathview)
 
+object <- "$object"
 
+#if str($short_name) != ""
+    short_name <- TRUE
+#else
+    short_name <- FALSE
+#end if
+
+data <- node.info(object, short.name = short_name)
+
+#if str($output) == "kegg.names"
+    write.table(unlist(data[1]), "$kegg_names_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "type"
+    write.table(unlist(data[2]), "$type_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "component"
+    write.table(unlist(data[3]), "$component_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "size"
+    write.table(unlist(data[4]), "$size_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "labels"
+    write.table(unlist(data[5]), "$labels_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "shape"
+    write.table(unlist(data[6]), "$shape_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "x"
+    write.table(unlist(data[7]), "$x_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "y"
+    write.table(unlist(data[8]), "$y_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "width"
+    write.table(unlist(data[9]), "$width_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+#if str($output) == "height"
+    write.table(unlist(data[10]), "$height_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+#end if
+
+#if str($node_map_select.node_map_selector) == "yes"
+    #if str($node_map_select.mol_data_select.mol_data_selector) == "yes"
+        mol_data <- scan("$node_map_select.mol_data_select.mol_data", what=character())
+    #else
+        mol_data <- NULL
+    #end if
+    node_types <- "$node_map_select.node_types"
+    node_sum <- "$node_map_select.node_sum"
+    #if str($node_map_select.entrez_gnodes) != ""
+        entrez_gnodes <- TRUE
+    #else
+        entrez_gnodes <- FALSE
+    #end if
+
+    result <- node.map(mol.data = mol_data, data, node.types = node_types, node.sum = node_sum, entrez.gnodes=entrez_gnodes)
+
+    write.table(result, "$node_map_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+#end if
 ]]>
         </configfile>
     </configfiles>
     <inputs>
-        <param name="object"
-
-
-        object either a character specifying the full KGML file name (with directory), or a
-object of "KEGGPathway" class, or a object of "graphNEL" class. The latter
-two are parsed results of KGML file.
-short.name logical, if TRUE, the short labels, i.e. the first iterm separated by "," in the long
-labels are parsed out as node labels. Default short.name=TRUE.
-        
+        <param name="object" type="data" format="xml" label="KGML file" />
+        <param name="short_name" type="boolean" truevalue="true" falsevalue="" checked="true" label="Short labels" help="i.e. the first iterm separated by a comma in the long labels are parsed out as node labels" />
+        <param name="output" type="select" label="Which element to output?" >
+            <option value="kegg.names">kegg.names</option>
+            <option value="type">type</option>
+            <option value="component">component</option>
+            <option value="size">size</option>
+            <option value="labels">labels</option>
+            <option value="shape">shape</option>
+            <option value="x">x</option>
+            <option value="y">y</option>
+            <option value="width">width</option>
+            <option value="height">height</option>
+        </param>
+        <conditional name="node_map_select">
+            <param name="node_map_selector" type="select" label="Map molecular data onto KEGG pathway nodes?">
+                <option value="yes">Yes</option>
+                <option value="no" selected="true">No</option>
+            </param>
+            <when value="yes">
+                <conditional name="mol_data_select">
+                    <param name="mol_data_selector" type="select" label="Specify mol data?">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected="true">No</option>
+                    </param>
+                    <when value="yes">
+                        <param name="mol_data" type="data" format="tabular" label="mol data" help="Either a dataframe with one numeric column labeled with molecule IDs as names (single sample) or a matrix-like data (multiple sample)." />
+                    </when>
+                    <when value="no"> </when>
+                </conditional>
+                <param name="node_types" type="select" label="Specify the node type to map to the mol data" >
+                    <option value="gene">Gene</option>
+                    <option value="compound">Compound</option>
+                    <option value="ortholog">Ortholog</option>
+                </param>
+                <param name="node_sum" type="select" label="Specify the method name to calculate node summary given that multiple genes or compounds are mapped to it" >
+                    <option value="sum">sum</option>
+                    <option value="mean">mean</option>
+                    <option value="max">max</option>
+                    <option value="max_abs">max.abs</option>
+                    <option value="random">random</option>
+                </param>
+                <param name="entrez_gnodes" type="boolean" truevalue="true" falsevalue="" checked="true" label="Use EntrezGene (NCBI GeneID) as the default gene ID in the KEGG data files?" help="This is needed because KEGG uses different types default gene ID for different species. Some most common model species use EntrezGene, but majority of others use Locus tag." />
+            </when>
+            <when value="no"> </when>
+        </conditional>
     </inputs>
 
     <outputs>
-        <data name="korg_output" format="txt" label="${tool.name} on ${on_string}: korg output" >
-            <filter>korg == "yes"</filter>
+        <data name="kegg_names_output" format="txt" label="node.info on ${on_string}: kegg.names output" >
+            <filter>output == "kegg.names"</filter>
         </data>
-        <data name="bods_output" format="txt" label="${tool.name} on ${on_string}: bods output" >
-            <filter>bods == "yes"</filter>
+        <data name="type_output" format="txt" label="node.info on ${on_string}: type output" >
+            <filter>output == "type"</filter>
+        </data>
+        <data name="component_output" format="txt" label="node.info on ${on_string}: component output" >
+            <filter>output == "component"</filter>
+        </data>
+        <data name="size_output" format="txt" label="node.info on ${on_string}: size output" >
+            <filter>output == "size"</filter>
+        </data>
+        <data name="labels_output" format="txt" label="node.info on ${on_string}: labels output" >
+            <filter>output == "labels"</filter>
+        </data>
+        <data name="shape_output" format="txt" label="node.info on ${on_string}: shape output" >
+            <filter>output == "shape"</filter>
+        </data>
+        <data name="x_output" format="txt" label="node.info on ${on_string}: x output" >
+            <filter>output == "x"</filter>
+        </data>
+        <data name="y_output" format="txt" label="node.info on ${on_string}: y output" >
+            <filter>output == "y"</filter>
+        </data>
+        <data name="width_output" format="txt" label="node.info on ${on_string}: width output" >
+            <filter>output == "width"</filter>
+        </data>
+        <data name="height_output" format="txt" label="node.info on ${on_string}: height output" >
+            <filter>output == "height"</filter>
+        </data>
+
+        <data name="node_map_output" format="txt" label="node.map on ${on_string}: output" >
+            <filter>node_map_select['node_map_selector']=="yes"</filter>
         </data>
     </outputs>
 
     <tests>
-
+        <test expect_num_outputs="1">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="no" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+        </test>
+        <test expect_num_outputs="2">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="yes" />
+                <conditional name="mol_data_select">
+                    <param name="mol_data_selector" value="no" />
+                </conditional>
+                <param name="node_types" value="gene" />
+                <param name="node_sum" value="sum" />
+                <param name="entrez_gnodes" value="true" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="node_map_output" value="node_map_output1.txt" />
+        </test>
+        <test expect_num_outputs="2">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="yes" />
+                <conditional name="mol_data_select">
+                    <param name="mol_data_selector" value="yes" />
+                    <param name="mol_data" value="mol_data.tabular" />
+                </conditional>
+                <param name="node_types" value="gene" />
+                <param name="node_sum" value="sum" />
+                <param name="entrez_gnodes" value="true" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="node_map_output" value="node_map_output2.txt" />
+        </test>
     </tests>
 
     <help><![CDATA[
@@ -58,6 +222,25 @@ Parser function node.info extract node data from parsed KEGG pathways. KGML file
 It returns:
 
 - a named list of 10 elements: "kegg.names", "type", "component", "size", "labels", "shape", "x", "y", "width" and "height". Each elements record the corresponding attribute for all nodes in the parsed KEGG pathway.
+
+===========================================================================================================================================
+
+If map molecular data onto KEGG pathway nodes is selected. The mapper function, mapping molecular data(gene expression, metabolite abundance etc)to nodes in KEGG pathway.
+
+Mapper function node.map maps user supplied molecular data to KEGG pathways. This function takes standard KEGG molecular IDs (Entrez Gene ID or KEGG Compound Accession) and map them to pathway nodes. None KEGG molecular gene IDs or Compound IDs are pre-mapped to standard KEGG IDs by calling another function mol.sum. When multiple molecules map to one node, the corresponding molecular data are summarized into a single node summary by calling function specified by node.sum. This mapped node summary data together with the parsed KGML data are then returned for further processing. Proper input data include: gene expression, protein expression, genetic association, metabolite abundance, genomic data, literature, and other data types mappable to pathways. The input mol.data may be NULL, then no molecular data are actually mapped, but all nodes of the specified node.type are considered "mappable" and their parsed KGML data returned.
+
+It returns:
+
+A dataframe of parsed KGML data and summary molecular data for each mapped node with the columns:
+
+- `kegg.names:` standard KEGG IDs/Names for mapped nodes. It’s Entrez Gene ID or KEGG Compound Accessions.
+- `labels:` Node labels to be used when needed
+- `type:` node type, currently 4 types are supported: "gene","enzyme", "compound" and "ortholog".
+- `x:` x coordinate in the original KEGG pathway graph.
+- `y:` y coordinate in the original KEGG pathway graph.
+- `width:` node width in the original KEGG pathway graph.
+- `height:` node height in the original KEGG pathway graph.
+- `other:` columns columns of the mapped gene/compound data
 
     ]]></help>
     <expand macro="citations" />
