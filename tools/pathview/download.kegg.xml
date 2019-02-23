@@ -27,6 +27,8 @@ file_type = "$file_type"
 
 download.kegg(pathway.id = pathway_id, species = species, kegg.dir = ".", file.type= file_type)
 
+
+
 ]]>
         </configfile>
     </configfiles>

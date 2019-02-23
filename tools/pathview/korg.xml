@@ -1,0 +1,85 @@
+<tool id="pathview_korg" name="korg" version="@VERSION@.0">
+    <description>maps data</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+#if str($korg) == "yes"
+    data(korg)
+    write.table(korg, "$korg_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+#end if
+#if str($bods) == "yes"
+    data(bods)
+    write.table(bods, "$bods_output", row.name=FALSE, col.name=TRUE, quote=FALSE)
+#end if
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="korg" type="select" label="Output mapping data on KEGG species, including taxonomy IDs, KEGG code?" >
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </param>
+        <param name="bods" type="select" label="Output mapping between gene annotation package names?" >
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data name="korg_output" format="txt" label="${tool.name} on ${on_string}: korg output" >
+            <filter>korg == "yes"</filter>
+        </data>
+        <data name="bods_output" format="txt" label="${tool.name} on ${on_string}: bods output" >
+            <filter>bods == "yes"</filter>
+        </data>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="korg" value="yes" />
+            <param name="bods" value="no" />
+            <output name="korg_output" value="korg_output.txt" />
+        </test>
+        <test expect_num_outputs="1">
+            <param name="korg" value="no" />
+            <param name="bods" value="yes" />
+            <output name="bods_output" value="bods_output.txt" />
+        </test>
+        <test expect_num_outputs="2">
+            <param name="korg" value="yes" />
+            <param name="bods" value="yes" />
+            <output name="korg_output" value="korg_output.txt" />
+            <output name="bods_output" value="bods_output.txt" />
+        </test>
+    </tests>
+
+    <help><![CDATA[
+Mapping data on KEGG species, including taxonomy IDs, KEGG code, scientific name, common name, corresponding gene ID types, and gene annotation package names in Bioconductor.
+
+It returns:
+
+-`korg:` a character matrix of ~4800 rows and 10 columns. First 5 columns are KEGG and NCBI taxonomy IDs, KEGG species code, scientific name and common name, followed columns on gene ID types used for each species: entrez.gnodes ("1" or "0", whether EntrezGene is the default gene ID) and representative KEGG gene ID, NCBI or Entrez Gene ID, NCBI protein and Uniprot ID. Note korg includes 4800 KEGG species (as of 06/2017), in the meantime, an updated version of korg is now checked out from Pathview Web server each time pathview package is loaded
+
+-`bods:` character matrix of 19 rows and 3 columns on the mapping between gene annotation package names in Bioconductor, common name and KEGG code of most common research species
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

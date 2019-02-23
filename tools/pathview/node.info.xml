@@ -1,0 +1,64 @@
+<tool id="pathview_node.info" name="node.info" version="@VERSION@.0">
+    <description>extracts node information</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="object"
+
+
+        object either a character specifying the full KGML file name (with directory), or a
+object of "KEGGPathway" class, or a object of "graphNEL" class. The latter
+two are parsed results of KGML file.
+short.name logical, if TRUE, the short labels, i.e. the first iterm separated by "," in the long
+labels are parsed out as node labels. Default short.name=TRUE.
+        
+    </inputs>
+
+    <outputs>
+        <data name="korg_output" format="txt" label="${tool.name} on ${on_string}: korg output" >
+            <filter>korg == "yes"</filter>
+        </data>
+        <data name="bods_output" format="txt" label="${tool.name} on ${on_string}: bods output" >
+            <filter>bods == "yes"</filter>
+        </data>
+    </outputs>
+
+    <tests>
+
+    </tests>
+
+    <help><![CDATA[
+Extract node information from KEGG pathway. The parser function, parser KGML file and/or extract node information from KEGG pathway.
+
+Parser function node.info extract node data from parsed KEGG pathways. KGML files are parsed using parseKGML2 and KEGGpathway2Graph2. These functions from KEGGgraph package have been heavily modified for reaction parsing and conversion to edges.
+
+It returns:
+
+- a named list of 10 elements: "kegg.names", "type", "component", "size", "labels", "shape", "x", "y", "width" and "height". Each elements record the corresponding attribute for all nodes in the parsed KEGG pathway.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
