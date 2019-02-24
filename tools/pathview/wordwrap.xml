@@ -1,0 +1,74 @@
+<tool id="pathview_wordwrap" name="wordwrap" version="@VERSION@.0">
+    <description>wraps or breaks strings</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+s <- "$s"
+width <- as.numeric($width)
+#if str("$break_word") != ""
+    break_word <- TRUE
+#else
+    break_word <- FALSE
+#end if
+
+result1 <- wordwrap(s, width = width, break.word = break_word)
+result2 <- strfit(s, width = width)
+
+write.table(result1, "$output1", row.name=FALSE, col.name=FALSE, quote=FALSE)
+write.table(result2, "$output2", row.name=FALSE, col.name=FALSE, quote=FALSE)
+
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="s" type="text" label="Strings to be wrapped or broken down" />
+        <param name="width" type="integer" value="20" label="Target line width in terms of number of characters" />
+        <param name="break_word" type="boolean" truevalue="true" falsevalue="" checked="false" label="Break within words?" help="If no is selected then words will be kept intact and only break between words. Therefore, some line may exceed the width limit."/>
+    </inputs>
+
+    <outputs>
+        <data name="output1" format="txt" label="${tool.name} on ${on_string}: output" />
+        <data name="output2" format="txt" label="${tool.name} on ${on_string}: output" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="s" value="(S)-Methylmalonate semialdehyde" />
+            <param name="width" value="15" />
+            <param name="break_word" value="false" />
+            <output name="output1" value="wordwrap_output1.txt" />
+            <output name="output2" value="wordwrap_output2.txt" />
+        </test>
+    </tests>
+
+    <help><![CDATA[
+strfit does hard wrapping, i.e. break within long words, wordwrap is a wrapper of strfit but also provides soft wrapping option, i.e. break only between words, and keep long words intact.
+
+These functions are called as to wrap long node labels into shorter lines on pathway graphs in keggview.graph function (when keggview.native=FALSE). They are equally useful for wrapping long labels in other types of graphs or output formats.
+
+It returns:
+
+- character of the same length of the string except that each element has been wrapped softly or hardly
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
