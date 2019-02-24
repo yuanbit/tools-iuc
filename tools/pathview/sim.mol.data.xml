@@ -1,0 +1,92 @@
+<tool id="pathview_sim.mol.data" name="sim.mol.data" version="@VERSION@.0">
+    <description>simulates molecular data</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+mol_type <- "$mol_type"
+#if str($id_type) != ""
+    id_type <- "$id_type"
+#else
+    id_type <- NULL
+#end if
+species <- "$species"
+#if str($discrete) != ""
+    discrete <- TRUE
+#else
+    discrete <- FALSE
+#end if
+nmol <- as.numeric("$nmol")
+nexp <- as.numeric("$nexp")
+rand_seed <- as.numeric("$rand_seed")
+
+
+result <- sim.mol.data(mol.type = mol_type, id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
+
+write.table(result, "$output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="mol_type" type="select" label="Specify the molecular type" >
+            <option value="gene">gene (transcripts and proteins)</option>
+            <option value="gene_ko">gene.jo (KEGG ortholog genes, as defined in KEGG ortholog pathways)</option>
+            <option value="cpd">cpd (metabolites, glycans, drugs)</option>
+        </param>
+        <param name="id_type" type="text" optional="true" label="Molecular ID type" help="When molecular type is gene, proper ID types include KEGG and ENTREZ (Entrez Gene). Multiple other ID types are also valid When species is among 19 major species fully annotated in Bioconductor, e.g. hsa (human), mmu (mouse) etc, check: data(gene.idtype.bods); gene.idtype.bods for other valid ID types. When molecular type is cpd, check data(cpd.simtypes); cpd.simtypes for valid ID types." />
+        <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name). Gene data id.type has multiple other choices for 19 major research species, for details see gene.idtype.bods; gene.idtype.bods. When other species are specified, gene id.type is limited to KEGG and ENTREZ." />
+        <param name="discrete" type="boolean" truevalue="true" falsevalue="" checked="false" label="Generate discrete or continuous data?" help="If yes is selected mol.data will be a charactor vector of molecular IDs." />
+        <param name="nmol" type="integer" value="1000" label="Target number of different molecules" help="Note that the specified id.type may not have as many different IDs as nmol. In this case, all IDs of id.type are used." />
+        <param name="nexp" type="integer" value="1" label="Sample size or the number of columns in the result simulated data" />
+        <param name="rand_seed" type="float" value="100" label="Seed number to start the random sampling process" help="This argumemnt makes the simulation reproducible as long as its value keeps the same." />
+    </inputs>
+
+    <outputs>
+        <data name="output" format="txt" label="${tool.name} on ${on_string}: output" />
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="mol_type" value="gene"/>
+            <param name="id_type" value="KEGG" /> 
+            <param name="species" value="hsa" />
+            <param name="discrete" value="false" />
+            <param name="nmol" value="1000" />
+            <param name="nexp" value="1" />
+            <param name="rand_seed" value="100" />
+            <output name="output" value="sim.mol.data_output.txt" />
+        </test>
+    </tests>
+
+    <help><![CDATA[
+The molecular data simulator generates either gene.data or cpd.data of different ID types, molecule numbers, sample sizes, either continuous or discrete.
+
+This function is written mainly for simulation or experiment with pathview package. With the simulated molecular data, you may check whether and how pathview works for molecular data of different types, IDs, format or sample sizes etc. You may also generate both gene.data and cpd.data and check data pathway based integration with pathview.
+
+It returns:
+
+- Either a dataframe with one numeric/character column with molecular IDs as names (single sample) or a matrix-like data (multiple sample), depends on the value of nexp. Matrix-like data structure has molecules as rows and samples as columns. Row names should be molecular IDs. 
+
+This returned data can be used directly as gene.data or cpd.data input of pathview main function.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

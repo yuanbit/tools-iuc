@@ -8,4 +8,5 @@
 
 -eg2id
 -mol.sum
--node.color
+-node.color: col.key
+-pathview
