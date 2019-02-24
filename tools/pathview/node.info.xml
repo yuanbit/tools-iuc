@@ -87,9 +87,16 @@ data <- node.info(object, short.name = short_name)
             discrete <- FALSE
         #end if
 
-        limit <- "$node_map_select.node_color_select.data_select.limit"
-        bins <- "$node_map_select.node_color_select.bin"
-        both_dirs <- "$node_map_select.node_color_select.both_dirs"
+        #if str($node_map_select.node_color_select.data_select) == "gene"
+            limit <- as.numeric("$node_map_select.node_color_select.data_select.gene_limit")
+        #else
+            limit <- as.numeric("$node_map_select.node_color_select.data_select.cpd_limit")
+        #end if
+        bins <- as.numeric("$node_map_select.node_color_select.bin")
+
+        #if str($node_map_select.node_color_select.both_dirs) != ""
+            both_dirs <- TRUE
+        #end if
         low <- "$node_map_select.node_color_select.low"
         mid <- "$node_map_select.node_color_select.mid"
         high <- "$node_map_select.node_color_select.high"
@@ -101,9 +108,7 @@ data <- node.info(object, short.name = short_name)
             trans_fun <- NULL
         #end if
 
-        #node_color <- node.color(plot.data = result, discrete=FALSE, limit, bins, both.dirs = both_dirs, low = low, mid = mid, high = high, na.col = na_col, trans.fun = trans_fun)
-
-        node_color <- node.color(plot.data = result, limit=limit, bins=bins)
+        node_color <- node.color(plot.data = result, discrete=discrete, limit=limit, bins=bins, both.dirs = both_dirs, low = low, mid = mid, high = high, na.col = na_col, trans.fun = trans_fun)
 
         write.table(node_color, "$node_color_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
     #end if
@@ -168,10 +173,10 @@ data <- node.info(object, short.name = short_name)
                                 <option value="cpd">cpd</option>
                             </param>
                             <when value="gene">
-                                <param name="limit" type="float" value="0.5" label="Specify the limit value for gene.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." />
+                                <param name="gene_limit" type="float" value="0.5" label="Specify the limit value for gene.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." />
                             </when>
                             <when value="cpd">
-                                <param name="limit" type="float" value="1" label="Specify the limit value for cpd.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data."/>
+                                <param name="cpd_limit" type="float" value="1" label="Specify the limit value for cpd.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data."/>
                             </when>
                         </conditional>
                         <param name="bin" type="integer" value="10" label="Specify the number of levels or bins for gene.data or cpd.data when converting them to pseudo colors" />
@@ -272,8 +277,44 @@ data <- node.info(object, short.name = short_name)
                 <param name="node_sum" value="sum" />
                 <param name="entrez_gnodes" value="true" />
             </conditional>
+             <conditional name="node_color_select">
+                <param name="node_color_selector" value="no" />
+            </conditional>
             <output name="kegg_names_output" value="kegg.names_output.txt" />
             <output name="node_map_output" value="node_map_output2.txt" />
+        </test>
+        <test expect_num_outputs="3">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="yes" />
+                <conditional name="mol_data_select">
+                    <param name="mol_data_selector" value="yes" />
+                    <param name="mol_data" value="mol_data.tabular" />
+                </conditional>
+                <param name="node_types" value="gene" />
+                <param name="node_sum" value="sum" />
+                <param name="entrez_gnodes" value="true" />
+            </conditional>
+             <conditional name="node_color_select">
+                <param name="node_color_selector" value="yes" />
+                <param name="discrete" value="false" />
+                <conditional name="data_select">
+                    <param name="data_selector" value="cpd" />
+                    <param name="cpd_limit" value="1" />
+                </conditional>
+                <param name="bin" value="10" />
+                <param name="both_dirs" value="true" />
+                <param name="low" value="green" />
+                <param name="mid" value="gray" />
+                <param name="high" value="red" />
+                <param name="na_col" value="transparent" />
+                <param name="trans_fun" value="none"/>
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="node_map_output" value="node_map_output2.txt" />
+            <output name="node_color_output" value="node_color_output.txt" />
         </test>
     </tests>
 
