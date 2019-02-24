@@ -1,0 +1,124 @@
+<tool id="pathview_pathview" name="pathview" version="@VERSION@.0">
+    <description>visualizes pathway</description>
+     <macros>
+       <import>pathview_macros.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="@VERSION@">bioconductor-pathview</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$script'
+    ]]></command>
+
+    <configfiles>
+        <configfile name="script"><![CDATA[
+## Setup R error handling to go to stderr
+options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
+
+## Import library
+library(pathview)
+
+pathview(gene.data = NULL, cpd.data = NULL, pathway.id, species = "hsa", kegg.dir = ".", cpd.idtype = "kegg", gene.idtype = "entrez", gene.annotpkg = NULL, min.nnodes = 3, kegg.native = TRUE, map.null = TRUE, expand.node = FALSE, split.group = FALSE, map.symbol =
+TRUE, map.cpdname = TRUE, node.sum = "sum", discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, cpd = 1), bins = list(gene = 10, cpd = 10), both.dirs = list(gene = T, cpd = T), trans.fun = list(gene = NULL, cpd = NULL), low = list(gene = "green", cpd = "blue"), mid =
+list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na.col = "transparent", ...)
+
+]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <conditional name="data_select">
+            <param name="data_selector" type="select" label="Specify gene or cpd data?" >
+                <option value="gene">gene</option>
+                <option value="cpd" selected="true">cpd</option>
+            </param>
+            <when value="gene">
+                <param name="gene_data" type="data" format="tabular" label="Gene data" help="Dataframe with either one numeric/character column (single sample) or a matrix-like data (multiple sample). Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. Check details for mappable ID types." />
+            </when>
+            <when value="cpd"> 
+                <param name="cpd_data" type="data" format="tabular" label="cpd data" help="Dataframe with either one numeric/character column (single sample) or a matrix-like data (multiple sample). cpd data is named with IDs mappable to KEGG compound IDs. Over 20 types of IDs included in CHEMBL database can be used here. Check details for mappable ID types." />
+            </when>
+        </conditional>
+        <conditional name="pathway_id_select">
+            <param name="pathway_id_selector" type="select" label="Specify a single or multiple KEGG pathway ID(s)?">
+                <option value="single">Single</option>
+                <option value="multiple">Multiple</option>
+            </param>
+            <when value="single">
+                <param name="pathway_id" type="text" label="KEGG pathway ID" help="usually 5 digit, may also include the 3 letter KEGG species code." />
+            </when>
+            <when value="multiple">
+                <param name="pathway_id" type="data" format="tabular" label="KEGG pathway ID" help="Dataframe with one column of IDs. Usually 5 digit, may also include the 3 letter KEGG species code." />
+            </when>
+        </conditional>
+        <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name)." />
+        <!--Not sure about this-->
+        <param name="kegg_file" type="data" format="xml" label="KEGG pathway data file" help="xml file" />
+        <param name="cpd_idtype" type="text" value="kegg" label="ID type used for cpd.data" />
+        <param name="gene_idtype" type="text" value="entrez" label="ID type used for gene.data" help="For species other than Entrez Gene, gene.idtype should be set to KEGG as KEGG use other types of gene IDs." />
+        <param name="gene_annotpkg" type="text" optional="true" label="Name of the annotation package to use for mapping between other gene ID types including symbols and Entrez gene ID" />
+        <param name="min_nnodes" type="integer" value="3" label="Minimal number of nodes of type gene, enzyme, compound or ortholog for a pathway to be considered" /> 
+        <param name="kegg_native" type="boolean" truevalue="true" falsevalue="" checked="true" label="Render pathway graph as native KEGG graph (.png) or using graphviz layout engine (.pdf)?" />
+        <param name="map_null" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map the NULL gene.data or cpd.data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view" />
+
+        expand.node logical, whether the multiple-gene nodes are expanded into single-gene nodes.
+Each expanded single-gene nodes inherits all edges from the original multiplegene
+node. This option only affects graphviz graph view, i.e. when kegg.native=FALSE.
+This option is not effective for most metabolic pathways where it conflits with
+converting reactions to edges. Default expand.node=FLASE.
+split.group logical, whether split node groups are split to individual nodes. Each split member
+nodes inherits all edges from the node group. This option only affects
+graphviz graph view, i.e. when kegg.native=FALSE. This option also effects
+most metabolic pathways even without group nodes defined orginally. For these
+pathways, genes involved in the same reaction are grouped automatically when
+converting reactions to edges unless split.group=TRUE. d split.group=FLASE.
+map.symbol logical, whether map gene IDs to symbols for gene node labels or use the graphic
+name from the KGML file. This option is only effective for kegg.native=FALSE
+or same.layer=FALSE when kegg.native=TRUE. For same.layer=TRUE when
+kegg.native=TRUE, the native KEGG labels will be kept. Default map.symbol=TRUE.
+map.cpdname logical, whether map compound IDs to formal names for compound node labels
+or use the graphic name from the KGML file (KEGG compound accessions).
+This option is only effective for kegg.native=FALSE. When kegg.native=TRUE,
+the native KEGG labels will be kept. Default map.cpdname=TRUE.
+    </inputs>
+
+    <outputs>
+        <data name="output1" format="txt" label="${tool.name} on ${on_string}: output" />
+        <data name="output2" format="txt" label="${tool.name} on ${on_string}: output" />
+    </outputs>
+
+    <tests>
+      
+    </tests>
+
+    <help><![CDATA[
+Pathview is a tool set for pathway based data integration and visualization. It maps and renders user data on relevant pathway graphs. All users need is to supply their gene or compound data and specify the target pathway. Pathview automatically downloads the pathway graph data, parses the data file, maps user data to the pathway, and render pathway graph with the mapped data. Pathview generates both native KEGG view and Graphviz views for pathways. 
+
+keggview.native and keggview.graph are the two viewer functions, and pathview is the main function providing a unified interface to downloader, parser, mapper and viewer functions.
+
+Pathview maps and renders user data on relevant pathway graphs. Pathview is a stand alone program for pathway based data integration and visualization. It also seamlessly integrates with pathway and functional analysis tools for large-scale and fully automated analysis. Pathview provides strong support for data Integration. It works with: 1) essentially all types of biological data mappable to
+pathways, 2) over 10 types of gene or protein IDs, and 20 types of compound or metabolite IDs, 3) pathways for over 2000 species as well as KEGG orthology, 4) varoius data attributes and formats, i.e. continuous/discrete data, matrices/vectors, single/multiple samples etc. To see mappable external gene/protein IDs do: data(gene.idtype.list), to see mappable external compound related IDs do: data(rn.list); names(rn.list). Pathview generates both native KEGG view and Graphviz views for pathways. Currently only KEGG pathways are implemented. Hopefully, pathways from Reactome, NCI and other databases will be supported in the future.
+
+It returns:
+
+Pathview can accept either a single pathway or multiple pathway ids. The result returned by pathview function is a named list corresponding to the input pathway ids. Each element (for each pathway itself is a named list, with 2 elements ("plot.data.gene", "plot.data.cpd").
+
+Both elements are data.frame or NULL depends on the corresponding input data gene.data and cpd.data. These data.frames record the plot data for mapped gene or compound nodes: rows are mapped genes/compounds, columns are:
+
+- `kegg.names:` standard KEGG IDs/Names for mapped nodes. It’s Entrez Gene ID or KEGG Compound Accessions.
+- `labels:` Node labels to be used when needed.
+- `all.mapped:` All molecule (gene or compound) IDs mapped to this node.
+- `type:` node type, currently 4 types are supported: "gene","enzyme", "compound" and "ortholog".
+- `x:` x coordinate in the original KEGG pathway graph.
+- `y:` y coordinate in the original KEGG pathway graph.
+- `width:` node width in the original KEGG pathway graph.
+- `height:` node height in the original KEGG pathway graph.
+- `other columns:1 columns of the mapped gene/compound data and corresponding pseudo-color codes for individual samples
+
+The results returned by keggview.native and codekeggview.graph are both a list of graph plotting parameters. These are not intended to be used externally.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
