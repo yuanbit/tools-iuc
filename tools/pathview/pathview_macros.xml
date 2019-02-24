@@ -1,7 +1,20 @@
 <?xml version="1.0"?>
 <macros>
   <token name="@VERSION@">1.22.0</token>
-
+  <xml name="node_param">
+    <param name="discrete" type="boolean" truevalue="true" falsevalue="" checked="false" label="Treat the molecular data or node summary data as discrete?" help="If no is selected, mol.data will be a charactor vector of molecular IDs"/>
+    <param name="bin" type="integer" value="10" label="Specify the number of levels or bins for gene.data or cpd.data when converting them to pseudo colors" />
+    <param name="both_dirs" type="boolean" truevalue="true" falsevalue="" checked="true" label="gene.data or cpd.data is a 1 directional data when converting them to pseudo colors?" />
+    <param name="low" type="text" value="green" label="Specify the low color spectra to code gene.data or cpd.data" help="When data are 1 directional (TRUE value in both.dirs), only mid and high are used to specify the color spectra. The color values can be given as color names (red), plot color index (2=red), and HTML-style RGB, (#FF0000)." />
+    <param name="mid" type="text" value="gray" label="Specify the mid color spectra to code gene.data or cpd.data" help="When data are 1 directional (TRUE value in both.dirs), only mid and high are used to specify the color spectra. The color values can be given as color names (red), plot color index (2=red), and HTML-style RGB, (#FF0000)." />
+    <param name="high" type="text" value="red" label="Specify the high color spectra to code gene.data or cpd.data" help="When data are 1 directional (TRUE value in both.dirs), only mid and high are used to specify the color spectra. The color values can be given as color names (red), plot color index (2=red), and HTML-style RGB, (#FF0000)." />
+    <param name="na_col" type="text" value="transparent" label="Color used for NA's or missing values in gene.data or cpd.data" />
+    <param name="trans_fun" type="select" label="How should gene.data and cpd.data be transformed?">
+      <option value="none">no transformation</option>
+      <option value="log">log transformation</option>
+      <option value="abs">abs transformation</option>
+    </param>
+  </xml>
   <xml name="citations">
     <citations>
       <citation type="doi">10.18129/B9.bioc.pathview</citation>

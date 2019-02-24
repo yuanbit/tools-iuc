@@ -62,26 +62,18 @@ list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na
         <param name="min_nnodes" type="integer" value="3" label="Minimal number of nodes of type gene, enzyme, compound or ortholog for a pathway to be considered" /> 
         <param name="kegg_native" type="boolean" truevalue="true" falsevalue="" checked="true" label="Render pathway graph as native KEGG graph (.png) or using graphviz layout engine (.pdf)?" />
         <param name="map_null" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map the NULL gene.data or cpd.data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view" />
-
-        expand.node logical, whether the multiple-gene nodes are expanded into single-gene nodes.
-Each expanded single-gene nodes inherits all edges from the original multiplegene
-node. This option only affects graphviz graph view, i.e. when kegg.native=FALSE.
-This option is not effective for most metabolic pathways where it conflits with
-converting reactions to edges. Default expand.node=FLASE.
-split.group logical, whether split node groups are split to individual nodes. Each split member
-nodes inherits all edges from the node group. This option only affects
-graphviz graph view, i.e. when kegg.native=FALSE. This option also effects
-most metabolic pathways even without group nodes defined orginally. For these
-pathways, genes involved in the same reaction are grouped automatically when
-converting reactions to edges unless split.group=TRUE. d split.group=FLASE.
-map.symbol logical, whether map gene IDs to symbols for gene node labels or use the graphic
-name from the KGML file. This option is only effective for kegg.native=FALSE
-or same.layer=FALSE when kegg.native=TRUE. For same.layer=TRUE when
-kegg.native=TRUE, the native KEGG labels will be kept. Default map.symbol=TRUE.
-map.cpdname logical, whether map compound IDs to formal names for compound node labels
-or use the graphic name from the KGML file (KEGG compound accessions).
-This option is only effective for kegg.native=FALSE. When kegg.native=TRUE,
-the native KEGG labels will be kept. Default map.cpdname=TRUE.
+        <param name="expand_node" type="boolean" truevalue="true" falsevalue="" checked="false" label="Expand multiple-gene nodes into single-gene nodes?" help="Each expanded single-gene nodes inherits all edges from the original multiplegene node. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option is not effective for most metabolic pathways where it conflits with converting reactions to edges." />
+        <param name="split_group" type="boolean" truevalue="true" falsevalue="" checked="false" label="Split node groups to individual nodes?" help="Each split member nodes inherits all edges from the node group. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option also effects most metabolic pathways even without group nodes defined orginally. For these pathways, genes involved in the same reaction are grouped automatically when converting reactions to edges unless split.group=TRUE" />
+        <param name="map_symbol" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map gene IDs to symbols for gene node labels?" help="If no selected, the graphic name from the KGML file will be used. This option is only effective for kegg.native=FALSE or same.layer=FALSE when kegg.native=TRUE. For same.layer=TRUE when kegg.native=TRUE, the native KEGG labels will be kept." />
+        <param name="map_cpdname" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map compound IDs to formal names for compound node labels?" help="If no selected the graphic name from the KGML file (KEGG compound accessions) will be used. This option is only effective for kegg.native=FALSE. When kegg.native=TRUE, the native KEGG labels will be kept." />
+        <param name="node_sum" type="select" label="Specify the method name to calculate node summary given that multiple genes or compounds are mapped to it" >
+          <option value="sum">sum</option>
+          <option value="mean">mean</option>
+          <option value="max">max</option>
+          <option value="max_abs">max.abs</option>
+          <option value="random">random</option>
+        </param>
+        <expand macro="node_param" />
     </inputs>
 
     <outputs>
