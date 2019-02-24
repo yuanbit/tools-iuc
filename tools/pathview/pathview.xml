@@ -60,12 +60,52 @@ list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na
         <param name="gene_idtype" type="text" value="entrez" label="ID type used for gene.data" help="For species other than Entrez Gene, gene.idtype should be set to KEGG as KEGG use other types of gene IDs." />
         <param name="gene_annotpkg" type="text" optional="true" label="Name of the annotation package to use for mapping between other gene ID types including symbols and Entrez gene ID" />
         <param name="min_nnodes" type="integer" value="3" label="Minimal number of nodes of type gene, enzyme, compound or ortholog for a pathway to be considered" /> 
-        <param name="kegg_native" type="boolean" truevalue="true" falsevalue="" checked="true" label="Render pathway graph as native KEGG graph (.png) or using graphviz layout engine (.pdf)?" />
+
+        <conditional name="kegg_native_select">
+            <param name="kegg_native_selector" type="select" label="Render pathway graph as native KEGG graph (.png) or using graphviz layout engine (.pdf)?">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </param>
+            <when value="yes">
+                <conditional name="same_layer_select">
+                    <param name="same_layer_selector" type="select" label="Control plotting layers?" help="1) if node colors be plotted in the same layer as the pathway graph when kegg.native=TRUE">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </param>
+                    <when value="yes">
+                        <param name="map_symbol" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map gene IDs to symbols for gene node labels?" help="If no selected, the graphic name from the KGML file will be used." />
+                    </when>
+                    <when value="no"> </when>
+                </conditional>
+                <param name="res" type="integer" value="300" label="The nominal resolution" help="In ppi which will be recorded in the bitmap file, if a positive integer. Also used for ’units’ other than the default, and to convert points to pixels" />
+                <param name="cex" type="float" value="0.25" label="The amount by which plotting text and symbols should be scaled relative to the default 1" />
+            </when>
+            <when value="no">
+                 <param name="expand_node" type="boolean" truevalue="true" falsevalue="" checked="false" label="Expand multiple-gene nodes into single-gene nodes?" help="Each expanded single-gene nodes inherits all edges from the original multiplegene node. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option is not effective for most metabolic pathways where it conflits with converting reactions to edges." />
+                 <param name="split_group" type="boolean" truevalue="true" falsevalue="" checked="false" label="Split node groups to individual nodes?" help="Each split member nodes inherits all edges from the node group. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option also effects most metabolic pathways even without group nodes defined orginally. For these pathways, genes involved in the same reaction are grouped automatically when converting reactions to edges unless split.group=TRUE" />
+                <param name="map_cpdname" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map compound IDs to formal names for compound node labels?" help="If no selected the graphic name from the KGML file (KEGG compound accessions) will be used. This option is only effective for kegg.native=FALSE. When kegg.native=TRUE, the native KEGG labels will be kept." />
+                <param name="same_layer" type="boolean" truevalue="true" falsevalue="" checked="true" label="Control plotting layers?" help="1) if node colors be plotted in the same layer as the pathway graph when kegg.native=TRUE, 2) if edge/node type legend be plotted in the same page when kegg.native=FALSE" />
+                <param name="cex" type="float" value="0.5" label="The amount by which plotting text and symbols should be scaled relative to the default 1" />
+                <param name="sign_pos" type="select" label="How to control the position of pathview signature?">
+                    <option value="bottomleft">bottomleft</option>
+                    <option value="bottomright" selected="true">bottomright</option>
+                    <option value="topleft">topleft</option>
+                    <option value="topright">topright</option>
+                </param>
+                <param name="path_graph" type="data" format="png" label="Graph object parsed from KGML file" />
+                <param name="pdf_width" type="float" value="7" label="Width of the pathway graph pdf file" help="Note that pdf width increase by half when same.layer=TRUE to accommodate legends." />
+                <param name="pdf_height" type="float" value="7" label="Height of the pathway graph pdf file" help="Note that pdf width increase by half when same.layer=TRUE to accommodate legends." />
+                <param name="rankdir" type="select" label="Specify the pathway graph layout direction">
+                    <option value="LR">left to right</option>
+                    <option value="TB">top to bottom</option>
+                </param>
+                <param name="is_signal" type="boolean" truevalue="true" falsevalue="" checked="true" label="Drop all the unconnected nodes if the pathway is treated as a signaling pathway?" help="This argument also affect the graph layout type, i.e. dot for signals or neato otherwise."/> 
+                <param name="afactor" type="float" value="1" label="Node amplifying factor" help="This argument is for node size fine-tuning, its effect is subtler than expected."/>
+                <param name="text_width" type="float" value="15" label="Specify the line width for text wrap" />
+                <param name="cpd_lab_offset" type="float" value="1.0" label="Specify how much compound labels should be put above the default position or node center" help="This argument is useful when map.cpdname=TRUE, i.e. compounds are labelled by full name, which affects the look of compound nodes and color."/>
+            </when>
+        </conditional>
         <param name="map_null" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map the NULL gene.data or cpd.data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view" />
-        <param name="expand_node" type="boolean" truevalue="true" falsevalue="" checked="false" label="Expand multiple-gene nodes into single-gene nodes?" help="Each expanded single-gene nodes inherits all edges from the original multiplegene node. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option is not effective for most metabolic pathways where it conflits with converting reactions to edges." />
-        <param name="split_group" type="boolean" truevalue="true" falsevalue="" checked="false" label="Split node groups to individual nodes?" help="Each split member nodes inherits all edges from the node group. This option only affects graphviz graph view, i.e. when kegg.native=FALSE. This option also effects most metabolic pathways even without group nodes defined orginally. For these pathways, genes involved in the same reaction are grouped automatically when converting reactions to edges unless split.group=TRUE" />
-        <param name="map_symbol" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map gene IDs to symbols for gene node labels?" help="If no selected, the graphic name from the KGML file will be used. This option is only effective for kegg.native=FALSE or same.layer=FALSE when kegg.native=TRUE. For same.layer=TRUE when kegg.native=TRUE, the native KEGG labels will be kept." />
-        <param name="map_cpdname" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map compound IDs to formal names for compound node labels?" help="If no selected the graphic name from the KGML file (KEGG compound accessions) will be used. This option is only effective for kegg.native=FALSE. When kegg.native=TRUE, the native KEGG labels will be kept." />
         <param name="node_sum" type="select" label="Specify the method name to calculate node summary given that multiple genes or compounds are mapped to it" >
           <option value="sum">sum</option>
           <option value="mean">mean</option>
@@ -74,6 +114,28 @@ list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na
           <option value="random">random</option>
         </param>
         <expand macro="node_param" />
+        <conditional name="cols_ts_gene_select">
+            <param name="cols_ts_gene_selector" type="select" label="Specify colors returned by node.color for rendering data" >
+                <option value="yes">Yes</option>
+                <option value="no" selected="true">No</option>
+            </param>
+        </conditional>
+        <param name="pathway_name" type="text" label="Specify the full KEGG pathway name in the format of 3-letter species code with 5-digit pathway id" help="eg hsa04612" />
+        <param name="out_suffix" type="text" value="pathview" label="The suffix to be added after the pathway name as part of the output graph file" help="Sample names or column names of the gene.data or cpd.data are also added when there are multiple samples." />
+        <param name="multi_state" type="boolean" truevalue="true" falsevalue="" checked="true" label="integrate multiple states (samples or columns) of gene.data or cpd.data and plotted in the same graph?" help="In other words, gene or compound nodes will be sliced into multiple pieces corresponding to the number of states in the data" />
+        <param name="match_data" type="boolean" truevalue="true" falsevalue="" checked="true" label="Pair the samples of gene.data and cpd.data are paired?" help="When let sample sizes of gene.data and cpd.data be m and n, when m>n, extra columns of NA’s (mapped to no color) will be added to cpd.data as to make the sample size the same. This will result in the same number of slice in gene nodes and compound when multi.state=TRUE. same.layer logical, control plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when kegg.native=TRUE, 2) if edge/node type legend be plotted in the same page when kegg.native=FALSE." />
+        <param name="new_signature" type="boolean" truevalue="true" falsevalue="" checked="true" label="Add pathview signature to the pathway graphs" />
+        <param name="plot_col_key" type="boolean" truevalue="true" falsevalue="" checked="true" label="Add color key  to the pathway graphs" />
+        <param name="key_align" type="select" label="Value to control how the color keys are aligned when both gene.data and cpd.data are not NULL" >
+            <option value="x">x</option>
+            <option value="y">y</option>
+        </param>
+        <param name="key_pos" type="select" label="How to control the position of color key(s)?>">
+            <option value="bottomleft">bottomleft</option>
+            <option value="bottomright">bottomright</option>
+            <option value="topleft">topleft</option>
+            <option value="topright" selected="true">topright</option>
+        </param>        
     </inputs>
 
     <outputs>
