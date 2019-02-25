@@ -194,12 +194,13 @@ data <- node.info(object, short.name = short_name)
         #else
             map_null <- FALSE
         #end if
+        node_sum <- "$pathview_select.node_sum"
 
     #end if
 
 pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = "cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, 
 
-node.sum = "sum", discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, cpd = 1), bins = list(gene = 10, cpd = 10), both.dirs = list(gene = T, cpd = T), trans.fun = list(gene = NULL, cpd = NULL), low = list(gene = "green", cpd = "blue"), mid = list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na.col = "transparent", same.layer = same_layer)
+node.sum = node_sum, discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, cpd = 1), bins = list(gene = 10, cpd = 10), both.dirs = list(gene = T, cpd = T), trans.fun = list(gene = NULL, cpd = NULL), low = list(gene = "green", cpd = "blue"), mid = list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na.col = "transparent", same.layer = same_layer)
 
 #end if
 ]]>
@@ -367,6 +368,13 @@ node.sum = "sum", discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, c
                     </when>
                 </conditional>
                 <param name="map_null" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map the NULL gene.data or cpd.data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view" />
+                <param name="node_sum" type="select" label="Specify the method name to calculate node summary given that multiple genes or compounds are mapped to it" >
+                  <option value="sum">sum</option>
+                  <option value="mean">mean</option>
+                  <option value="max">max</option>
+                  <option value="max_abs">max.abs</option>
+                  <option value="random">random</option>
+                </param>
             </when>
         </conditional>      
     </inputs>

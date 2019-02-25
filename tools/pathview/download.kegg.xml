@@ -25,12 +25,7 @@ pathway_id = "$pathway_id"
 species = "$species"
 file_type = "$file_type"
 
-sink("$output")
-    download.kegg(pathway.id = pathway_id, species = species, kegg.dir = ".", file.type= file_type)
-sink()
-
-
-
+download.kegg(pathway.id = pathway_id, species = species, kegg.dir = ".", file.type= file_type)
 ]]>
         </configfile>
     </configfiles>
@@ -39,16 +34,34 @@ sink()
         <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name)" />
         <param name="file_type" type="select" label="Select the output type">
             <option value="xml">KEGG pathway data file (xml)</option>
-            <option value="image" selected="true">Image file (png)</option>
+            <option value="png" selected="true">Image file (png)</option>
         </param>
     </inputs>
 
     <outputs>
-         <data name="output" format="png" from_work_dir="output.png" label="${tool.name} on ${on_string}: Output image file" />
+         <data name="png_output" format="png" label="${tool.name} on ${on_string}: png output">
+            <filter>file_type == "png"</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" ext="png" visible="true" assign_primary_output="true" />
+        </data>
+        <data name="xml_output" format="xml" label="${tool.name} on ${on_string}: xml output">
+            <filter>file_type == "xml"</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" ext="xml" visible="true" assign_primary_output="true" />
+        </data>
     </outputs>
 
     <tests>
-
+        <test expect_num_outputs="1">
+            <param name="pathway_id" value="04110" />
+            <param name="species" value="hsa" />
+            <param name="file_type" value="png" />
+            <output name="png_output" value="download.kegg_png_output.png" />
+        </test>
+        <test expect_num_outputs="1">
+            <param name="pathway_id" value="04110" />
+            <param name="species" value="hsa" />
+            <param name="file_type" value="xml" />
+            <output name="png_output" value="download.kegg_xml_output.xml" />
+        </test>
     </tests>
 
     <help><![CDATA[
