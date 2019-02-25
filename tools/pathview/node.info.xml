@@ -111,98 +111,13 @@ data <- node.info(object, short.name = short_name)
         node_color <- node.color(plot.data = result, discrete=discrete, limit=limit, bins=bins, both.dirs = both_dirs, low = low, mid = mid, high = high, na.col = na_col, trans.fun = trans_fun)
 
         write.table(node_color, "$node_color_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+
+
+        col.key(discrete=FALSE, limit = 1, bins = 10, cols = NULL, both.dirs = TRUE, low = "green", mid = "gray", high = "red", graph.size, node.size, size.by.graph = TRUE, key.pos = "topright", off.sets = c(x = 0, y = 0), align = "n", cex = 1, lwd = 1)
     #end if
 #end if
 
-#if str($pathview_select.pathview_selector) == "yes"
-    #if str($pathview_select.data_select.data_selector) == "gene"
-        #if str($pathview_select.data_select.data_type) == "numeric"
-            gene_data <- scan("$pathview_select.data_select.gene_data", what=numeric())
-        #else if str($pathview_select.data_select.data_type) == "character"
-            gene_data <- scan("$pathview_select.data_select.gene_data", what=character())
-        #else 
-            gene_data <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
-        #end if
-        cpd_data <- NULL
-    #else
-        #if str($pathview_select.data_select.data_type) == "numeric"
-            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=numeric())
-        #else if str($pathview_select.data_select.data_type) == "character"
-            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=character())
-        #else 
-            cpd_data <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
-        #end if
-        gene_data <- NULL
 
-        #if str($pathview_select.pathway_id_select.pathway_id_selector) == "single"
-            pathway_id <- "$pathview_select.pathway_id_select.pathway_id"
-        #else
-            pathway_id <- scan($pathview_select.pathway_id_select.pathway_id, what=character())
-        #end if
-        species <- "$pathview_select.species"
-        cpd_idtype <- "$pathview_select.cpd_idtype"
-        gene_idtype <- "$pathview_select.gene_idtype"
-        #if str($pathview_select.gene_annotpkg) != ""
-            gene_annotpkg <- "$pathview_select.gene_annotpkg"
-        #else
-            gene_annotpkg <- NULL
-        #end if
-        min_nnodes <- as.numeric("$pathview_select.min_nnodes")
-
-        #if str($pathview_select.kegg_native_select.kegg_native_selector) == "yes"
-            kegg_native <- TRUE
-            expand_node <- FALSE
-            split_group <- FALSE
-            same_layer <- TRUE
-            map_symbol <- TRUE
-            map_cpdname <- TRUE
-            #if str($pathview_select.kegg_native_select.same_layer_select.same_layer_selector) == "yes"
-                same_layer <- TRUE
-                #if str($pathview_select.kegg_native_select.same_layer_select.map_symbol) != ""
-                    map_symbol <- TRUE
-                #else
-                    map_symbol <- FALSE
-                #end if
-            #else
-                same_layer <- FALSE
-            #end if
-        #else
-            kegg_native <- FALSE
-            same_layer <- TRUE
-            map_symbol <- TRUE
-            #if str($pathview_select.kegg_native_select.expand_node) != ""
-                expand_node <- TRUE
-            #else 
-                expand_node <- FALSE
-            #end if
-            #if str($pathview_select.kegg_native_select.split_group) != ""
-                split_group <- TRUE
-            #else 
-                split_group <- FALSE
-            #end if
-            #if str($pathview_select.kegg_native_select.map_cpdname) != ""
-                map_cpdname <- TRUE
-            #else 
-                map_cpdname <- FALSE
-            #end if
-
-
-        #end if
-
-        #if str($pathview_select.map_null) != ""
-            map_null <- TRUE
-        #else
-            map_null <- FALSE
-        #end if
-        node_sum <- "$pathview_select.node_sum"
-
-    #end if
-
-pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = "cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, 
-
-node.sum = node_sum, discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, cpd = 1), bins = list(gene = 10, cpd = 10), both.dirs = list(gene = T, cpd = T), trans.fun = list(gene = NULL, cpd = NULL), low = list(gene = "green", cpd = "blue"), mid = list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na.col = "transparent", same.layer = same_layer)
-
-#end if
 ]]>
         </configfile>
     </configfiles>
@@ -269,6 +184,43 @@ node.sum = node_sum, discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1
                             </when>
                         </conditional>
                         <expand macro="node_param" />
+                        <conditional name="col_key_select">
+                            <param name="col_key_selector" type="select" label="Draw color key(s) for mapped molecular data on the pathway graph?">
+                                <option value="yes">Yes</option>
+                                <option value="no" selected="true">No</option>
+                            </param>
+                            <when value="yes">
+                                <param name="cols" type="text" optional="true" label="Specify a discrete spectrum of colors to be plotted as color key" help="If an arguemeant is provided, the number of discrete colors has to match bins." />
+                                <conditional name="size_by_graph_select">
+                                    <param name="size_by_graph_selector" type="select" label="Determine the sizes and exact location of the color key with respect to the size of the whole graph panel or that of a single node?" help="If no is selected graph width, height, and node width, height can be entered manually" >
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </param>
+                                    <when value="yes"> </when>
+                                    <when value="no">
+                                        <param name="graph_width" type="float" label="Width of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
+                                        <param name="graph_height" type="float" label="Height of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
+                                        <param name="node_width" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
+                                        <param name="node_height" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
+                                    </when>
+                                </conditional>
+                                <param name="key_pos" type="select" label="How to control the position of color key(s)?>">
+                                    <option value="bottomleft">bottomleft</option>
+                                    <option value="bottomright">bottomright</option>
+                                    <option value="topleft">topleft</option>
+                                    <option value="topright" selected="true">topright</option>
+                                </param>    
+                                <param name="off_set_x" type="float" value="0" label="Specify the offset values in the x axes when plotting a new color key, as to avoid overlap with existing color keys or boundaries" help="Note that the off.sets value is reset and returned each time col.key function is called, as for the reference of plotting the next color key." />
+                                <param name="off_set_y" type="float" value="0" label="Specify the offset values in the y axes when plotting a new color key, as to avoid overlap with existing color keys or boundaries" help="Note that the off.sets value is reset and returned each time col.key function is called, as for the reference of plotting the next color key." />
+                                <param name="key_align" type="select" label="Value to control how the color keys are aligned when both gene.data and cpd.data are not NULL" >
+                                    <option value="x">x</option>
+                                    <option value="y">y</option>
+                                </param>
+                                <param name="cex" type="float" value="0.25" label="The amount by which plotting text and symbols should be scaled relative to the default 1" />
+                                <param name="lwd" type="float" value="1" label="Line width" help="A positive number" /> 
+                            </when>
+                            <when value="no"> </when>
+                        </conditional>
                     </when>
                     <when value="no"> </when>
                 </conditional>

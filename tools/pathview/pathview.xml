@@ -105,6 +105,7 @@ list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na
                 <param name="cpd_lab_offset" type="float" value="1.0" label="Specify how much compound labels should be put above the default position or node center" help="This argument is useful when map.cpdname=TRUE, i.e. compounds are labelled by full name, which affects the look of compound nodes and color."/>
             </when>
         </conditional>
+        
         <param name="map_null" type="boolean" truevalue="true" falsevalue="" checked="true" label="Map the NULL gene.data or cpd.data to pathway?" help="When NULL data are mapped, the gene or compound nodes in the pathway will be rendered as actually mapped nodes, except with NA-valued color. When NULL data are not mapped, the nodes are rendered as unmapped nodes. This argument mainly affects native KEGG graph view" />
         <param name="node_sum" type="select" label="Specify the method name to calculate node summary given that multiple genes or compounds are mapped to it" >
           <option value="sum">sum</option>

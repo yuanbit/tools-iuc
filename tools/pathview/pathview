@@ -1,0 +1,89 @@
+#if str($pathview_select.pathview_selector) == "yes"
+    #if str($pathview_select.data_select.data_selector) == "gene"
+        #if str($pathview_select.data_select.data_type) == "numeric"
+            gene_data <- scan("$pathview_select.data_select.gene_data", what=numeric())
+        #else if str($pathview_select.data_select.data_type) == "character"
+            gene_data <- scan("$pathview_select.data_select.gene_data", what=character())
+        #else 
+            gene_data <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
+        #end if
+        cpd_data <- NULL
+    #else
+        #if str($pathview_select.data_select.data_type) == "numeric"
+            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=numeric())
+        #else if str($pathview_select.data_select.data_type) == "character"
+            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=character())
+        #else 
+            cpd_data <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
+        #end if
+        gene_data <- NULL
+
+        #if str($pathview_select.pathway_id_select.pathway_id_selector) == "single"
+            pathway_id <- "$pathview_select.pathway_id_select.pathway_id"
+        #else
+            pathway_id <- scan($pathview_select.pathway_id_select.pathway_id, what=character())
+        #end if
+        species <- "$pathview_select.species"
+        cpd_idtype <- "$pathview_select.cpd_idtype"
+        gene_idtype <- "$pathview_select.gene_idtype"
+        #if str($pathview_select.gene_annotpkg) != ""
+            gene_annotpkg <- "$pathview_select.gene_annotpkg"
+        #else
+            gene_annotpkg <- NULL
+        #end if
+        min_nnodes <- as.numeric("$pathview_select.min_nnodes")
+
+        #if str($pathview_select.kegg_native_select.kegg_native_selector) == "yes"
+            kegg_native <- TRUE
+            expand_node <- FALSE
+            split_group <- FALSE
+            same_layer <- TRUE
+            map_symbol <- TRUE
+            map_cpdname <- TRUE
+            #if str($pathview_select.kegg_native_select.same_layer_select.same_layer_selector) == "yes"
+                same_layer <- TRUE
+                #if str($pathview_select.kegg_native_select.same_layer_select.map_symbol) != ""
+                    map_symbol <- TRUE
+                #else
+                    map_symbol <- FALSE
+                #end if
+            #else
+                same_layer <- FALSE
+            #end if
+        #else
+            kegg_native <- FALSE
+            same_layer <- TRUE
+            map_symbol <- TRUE
+            #if str($pathview_select.kegg_native_select.expand_node) != ""
+                expand_node <- TRUE
+            #else 
+                expand_node <- FALSE
+            #end if
+            #if str($pathview_select.kegg_native_select.split_group) != ""
+                split_group <- TRUE
+            #else 
+                split_group <- FALSE
+            #end if
+            #if str($pathview_select.kegg_native_select.map_cpdname) != ""
+                map_cpdname <- TRUE
+            #else 
+                map_cpdname <- FALSE
+            #end if
+
+
+        #end if
+
+        #if str($pathview_select.map_null) != ""
+            map_null <- TRUE
+        #else
+            map_null <- FALSE
+        #end if
+        node_sum <- "$pathview_select.node_sum"
+
+    #end if
+
+pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = "cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, 
+
+node.sum = node_sum, discrete=list(gene=FALSE, cpd=FALSE), limit = list(gene = 1, cpd = 1), bins = list(gene = 10, cpd = 10), both.dirs = list(gene = T, cpd = T), trans.fun = list(gene = NULL, cpd = NULL), low = list(gene = "green", cpd = "blue"), mid = list(gene = "gray", cpd = "gray"), high = list(gene = "red", cpd = "yellow"), na.col = "transparent", same.layer = same_layer)
+
+#end if
