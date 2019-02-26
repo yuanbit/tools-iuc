@@ -112,8 +112,34 @@ data <- node.info(object, short.name = short_name)
 
         write.table(node_color, "$node_color_output", row.name=FALSE, col.name=FALSE, quote=FALSE)
 
+        #if str($node_map_select.node_color_select.col_key_select.col_key_selector) == "yes"
+            #if str($node_map_select.node_color_select.col_key_select.cols_select.cols_selector) == "yes"
+                cols <- scan("$node_map_select.node_color_select.col_key_select.cols_select.cols", what=character())
+            #else
+                cols <- NULL
+            #end if
+            graph_width <- as.numeric("$node_map_select.node_color_select.col_key_select.graph_width")
+            graph_height <- as.numeric("$node_map_select.node_color_select.col_key_select.graph_height")
+            graph_size <- c(graph_width, graph_height)
+            node_width <- as.numeric("$node_map_select.node_color_select.col_key_select.node_width")
+            node_height <- as.numeric("$node_map_select.node_color_select.col_key_select.node_height")
+            node_size <- c(node_width, node_height)
+            #if str($node_map_select.node_color_select.col_key_select.size_by_graph) != ""
+                size_by_graph <- TRUE
+            #else
+                size_by_graph <- FALSE
+            #end if
+            key_pos <- "$node_map_select.node_color_select.col_key_select.key_pos"
+            off_set_x <- as.numeric("$node_map_select.node_color_select.col_key_select.off_set_x")
+            off_set_y <- as.numeric("$node_map_select.node_color_select.col_key_select.off_set_y")
+            off_sets <- c(x = off_set_x, y = off_set_y)
+            align <- "$node_map_select.node_color_select.col_key_select.key_align"
+            cex <- as.numeric("$node_map_select.node_color_select.col_key_select.cex")
+            lwd <- as.numeric("$node_map_select.node_color_select.col_key_select.lwd")
 
-        col.key(discrete=FALSE, limit = 1, bins = 10, cols = NULL, both.dirs = TRUE, low = "green", mid = "gray", high = "red", graph.size, node.size, size.by.graph = TRUE, key.pos = "topright", off.sets = c(x = 0, y = 0), align = "n", cex = 1, lwd = 1)
+            sink("$col_key_output")
+                col.key(discrete= discrete, limit = limit, bins = bins, cols = cols, both.dirs = both_dirs, low = low, mid = mid, high = high, graph.size = graph_size, node.size, size.by.graph = FALSE, key.pos = key_pos, off.sets = off_sets, align = align, cex = cex, lwd = lwd)
+            sink()
     #end if
 #end if
 
@@ -190,20 +216,21 @@ data <- node.info(object, short.name = short_name)
                                 <option value="no" selected="true">No</option>
                             </param>
                             <when value="yes">
-                                <param name="cols" type="text" optional="true" label="Specify a discrete spectrum of colors to be plotted as color key" help="If an arguemeant is provided, the number of discrete colors has to match bins." />
-                                <conditional name="size_by_graph_select">
-                                    <param name="size_by_graph_selector" type="select" label="Determine the sizes and exact location of the color key with respect to the size of the whole graph panel or that of a single node?" help="If no is selected graph width, height, and node width, height can be entered manually" >
+                                <conditional name="cols_select">
+                                    <param name="cols_selector" type="select" label="Specify a discrete spectrum of colors to be plotted as color key?" help="If an arguemeant is provided, the number of discrete colors has to match bins." >
                                         <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="no" selected="true">No</option>
                                     </param>
-                                    <when value="yes"> </when>
-                                    <when value="no">
-                                        <param name="graph_width" type="float" label="Width of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
-                                        <param name="graph_height" type="float" label="Height of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
-                                        <param name="node_width" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
-                                        <param name="node_height" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
+                                    <when value="yes">
+                                        <param name="cols" type="data" format="tabular" label="Specify a discrete spectrum of colors to be plotted as color key" help="Dataframe with a column of colors" />
                                     </when>
+                                    <when value="no"> </when>
                                 </conditional>
+                                <param name="size_by_graph" type="boolean" truevalue="true" falsevalue="" checked="true" label="Determine the sizes and exact location of the color key with respect to the size of the whole graph panel or that of a single node?" />
+                                <param name="graph_width" type="float" label="Width of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
+                                <param name="graph_height" type="float" label="Height of the pathway graph panel" help="This is needed to determine the sizes and exact location of the color key"/>
+                                <param name="node_width" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
+                                <param name="node_height" type="float" label="Width of the the standard gene nodes (rectangles)" help="This is needed to determine the sizes and exact location of the color key" />
                                 <param name="key_pos" type="select" label="How to control the position of color key(s)?>">
                                     <option value="bottomleft">bottomleft</option>
                                     <option value="bottomright">bottomright</option>
@@ -328,6 +355,7 @@ data <- node.info(object, short.name = short_name)
                   <option value="random">random</option>
                 </param>
             </when>
+            <when value="no"> </when>
         </conditional>      
     </inputs>
 
@@ -367,6 +395,9 @@ data <- node.info(object, short.name = short_name)
         </data>
         <data name="node_color_output" format="txt" label="node.color on ${on_string}: output" >
             <filter>node_map_select['node_map_selector']=="yes" and node_map_select['node_color_select']['node_color_selector'] == "yes"</filter>
+        </data>
+        <data name="col_key_output" format="png" label="col.key on ${on_string}: output" >
+            <filter>node_map_select['node_map_selector']=="yes" and node_map_select['node_color_select']['node_color_selector'] == "yes" and node_map_select['node_color_select']['col_key_select']['col_key_selector'] == "yes"</filter>
         </data>
     </outputs>
 
