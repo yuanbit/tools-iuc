@@ -35,16 +35,17 @@ download.kegg(pathway.id = pathway_id, species = species, kegg.dir = ".", file.t
         <param name="file_type" type="select" label="Select the output type">
             <option value="xml">KEGG pathway data file (xml)</option>
             <option value="png" selected="true">Image file (png)</option>
+            <option value="xml_png" selected="true">KEGG pathway data file and image file (xml and png)</option>
         </param>
     </inputs>
 
     <outputs>
          <data name="png_output" format="png" label="${tool.name} on ${on_string}: png output">
-            <filter>file_type == "png"</filter>
+            <filter>file_type == "png" or file_type == "xml_png"</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" ext="png" visible="true" assign_primary_output="true" />
         </data>
         <data name="xml_output" format="xml" label="${tool.name} on ${on_string}: xml output">
-            <filter>file_type == "xml"</filter>
+            <filter>file_type == "xml" or file_type == "xml_png"</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" ext="xml" visible="true" assign_primary_output="true" />
         </data>
     </outputs>
