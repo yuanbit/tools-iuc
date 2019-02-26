@@ -9,7 +9,9 @@
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[
-        Rscript '$script'
+        Rscript '$script' &&
+        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".png "$png_output1" &&
+        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png "$png_output2"
     ]]></command>
 
     <configfiles>
@@ -149,20 +151,18 @@ data <- node.info(object, short.name = short_name)
 
 #if str($pathview_select.pathview_selector) == "yes"
     #if str($pathview_select.data_select.data_selector) == "gene"
-        #if str($pathview_select.data_select.data_type) == "numeric"
-            gene_data <- scan("$pathview_select.data_select.gene_data", what=numeric())
-        #else if str($pathview_select.data_select.data_type) == "character"
-            gene_data <- scan("$pathview_select.data_select.gene_data", what=character())
+        #if str($pathview_select.data_select.data_type) == "single"
+            gene_read <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
+            gene_data <- setNames(gene_read[[2]], gene_read[[1]])
         #else 
             gene_data <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
         #end if
         cpd_data <- NULL
         limit <- as.numeric("$pathview_select.data_select.gene_limit")     
     #else
-        #if str($pathview_select.data_select.data_type) == "numeric"
-            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=numeric())
-        #else if str($pathview_select.data_select.data_type) == "character"
-            cpd_data <- scan("$pathview_select.data_select.cpd_data", what=character())
+        #if str($pathview_select.data_select.data_type) == "single"
+            cpd_read <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
+            cpd_data <- setNames(cpd_read[[2]], cpd_read[[1]])
         #else 
             cpd_data <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
         #end if
@@ -253,7 +253,9 @@ data <- node.info(object, short.name = short_name)
 
     #pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = "cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix)
 
-    pathview(gene.data = gene_data, pathway.id = pathway_id, species = species, out.suffix = out_suffix, kegg.native = kegg_native)
+    #pathview(gene.data = gene_data, pathway.id = pathway_id, species = species, out.suffix = out_suffix, kegg.native = kegg_native)
+
+pathview(gene.data = gene_data, pathway.id = "04110", species = "hsa", out.suffix = "gse16873", kegg.native = TRUE)
 
 #end if
 ]]>
@@ -380,20 +382,18 @@ data <- node.info(object, short.name = short_name)
                         <option value="cpd" selected="true">cpd</option>
                     </param>
                     <when value="gene">
-                        <param name="gene_data" type="data" format="tabular" label="Gene data" help="Dataframe with either one numeric/character column (single sample) or a matrix-like data (multiple sample). Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. Check details for mappable ID types." />
-                        <param name="data_type" type="select" label="Data type" >
-                            <option value="numeric">Numeric (single sample)</option>
-                            <option value="character">Character (single sample)</option>
-                            <option value="matrix">Matrix-like structure (multiple sample) </option>
+                        <param name="gene_data" type="data" format="tabular" label="Gene data" help="Dataframe with either one column of gene IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the gene IDs and the second column is the data." />
+                        <param name="data_type" type="select" label="Single or Multiple sample specified?" >
+                            <option value="single">Single</option>
+                            <option value="multiple">Multiple</option>
                         </param>
                         <param name="gene_limit" type="float" value="0.5" label="Specify the limit value for gene.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." />
                     </when>
                     <when value="cpd"> 
-                        <param name="cpd_data" type="data" format="tabular" label="cpd data" help="Dataframe with either one numeric/character column (single sample) or a matrix-like data (multiple sample). cpd data is named with IDs mappable to KEGG compound IDs. Over 20 types of IDs included in CHEMBL database can be used here. Check details for mappable ID types." />
-                        <param name="data_type" type="select" label="Data type" >
-                            <option value="numeric">Numeric (single sample)</option>
-                            <option value="character">Character (single sample)</option>
-                            <option value="matrix">Matrix-like structure (multiple sample) </option>
+                        <param name="cpd_data" type="data" format="tabular" label="cpd data" help="Dataframe with either one column of  IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). cpd data is named with IDs mappable to KEGG compound IDs. Over 20 types of IDs included in CHEMBL database can be used here. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the IDs and the second column is the data." />
+                        <param name="data_type" type="select" label="Single or Multiple sample specified?" >
+                            <option value="single">Single</option>
+                            <option value="multiple">Multiple</option>
                         </param>
                          <param name="cpd_limit" type="float" value="1" label="Specify the limit value for cpd.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data."/>
                     </when>
@@ -514,9 +514,11 @@ data <- node.info(object, short.name = short_name)
         <data name="col_key_output" format="png" label="col.key on ${on_string}: output" >
             <filter>node_map_select['node_map_selector']=="yes" and node_map_select['node_color_select']['node_color_selector'] == "yes" and node_map_select['node_color_select']['col_key_select']['col_key_selector'] == "yes"</filter>
         </data>
-        <data name="png_output" format="png" label="pathview on ${on_string}: png output">
+        <data name="png_output1" format="png" label="pathview on ${on_string}: png output">
             <filter>pathview_select['pathview_selector'] == "yes"</filter>
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" ext="png" visible="true" assign_primary_output="true" />
+        </data>
+        <data name="png_output2" format="png" label="pathview on ${on_string}: png output">
+            <filter>pathview_select['pathview_selector'] == "yes"</filter>
         </data>
     </outputs>
 
