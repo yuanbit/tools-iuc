@@ -11,7 +11,8 @@
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$script' &&
         mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".png "$png_output1" &&
-        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png "$png_output2"
+        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png "$png_output2" &&
+        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".xml "$xml_output"
     ]]></command>
 
     <configfiles>
@@ -184,44 +185,6 @@ data <- node.info(object, short.name = short_name)
         gene_annotpkg <- NULL
     #end if
     min_nnodes <- as.numeric("$pathview_select.min_nnodes")
-    #if str($pathview_select.kegg_native_select.kegg_native_selector) == "yes"
-        kegg_native <- TRUE
-        expand_node <- FALSE
-        split_group <- FALSE
-        same_layer <- TRUE
-        map_symbol <- TRUE
-        map_cpdname <- TRUE
-        #if str($pathview_select.kegg_native_select.same_layer_select.same_layer_selector) == "yes"
-            same_layer <- TRUE
-            #if str($pathview_select.kegg_native_select.same_layer_select.map_symbol) != ""
-                map_symbol <- TRUE
-            #else
-                map_symbol <- FALSE
-            #end if
-        #else
-            same_layer <- FALSE
-        #end if
-    #else
-        kegg_native <- FALSE
-        same_layer <- TRUE
-        map_symbol <- TRUE
-        #if str($pathview_select.kegg_native_select.expand_node) != ""
-            expand_node <- TRUE
-        #else 
-            expand_node <- FALSE
-        #end if
-        #if str($pathview_select.kegg_native_select.split_group) != ""
-            split_group <- TRUE
-        #else 
-            split_group <- FALSE
-        #end if
-        #if str($pathview_select.kegg_native_select.map_cpdname) != ""
-            map_cpdname <- TRUE
-        #else 
-            map_cpdname <- FALSE
-        #end if
-    #end if
-
     #if str($pathview_select.map_null) != ""
         map_null <- TRUE
     #else
@@ -249,14 +212,49 @@ data <- node.info(object, short.name = short_name)
     #else
         trans_fun <- NULL
     #end if
-        
-
     out_suffix <- "$pathview_select.out_suffix"
 
-    #pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = "cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix)
+    #if str($pathview_select.kegg_native_select.kegg_native_selector) == "yes"
+        kegg_native <- TRUE
+        expand_node <- FALSE
+        split_group <- FALSE
+        same_layer <- TRUE
+        map_symbol <- TRUE
+        map_cpdname <- TRUE
+        #if str($pathview_select.kegg_native_select.same_layer_select.same_layer_selector) == "yes"
+            same_layer <- TRUE
+            #if str($pathview_select.kegg_native_select.same_layer_select.map_symbol) != ""
+                map_symbol <- TRUE
+            #else
+                map_symbol <- FALSE
+            #end if
+        #else
+            same_layer <- FALSE
+        #end if
 
-    pathview(gene.data = gene_data, pathway.id = pathway_id, species = species, out.suffix = out_suffix, kegg.native = kegg_native)
+        pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix)
+    #else
+        kegg_native <- FALSE
+        same_layer <- TRUE
+        map_symbol <- TRUE
+        #if str($pathview_select.kegg_native_select.expand_node) != ""
+            expand_node <- TRUE
+        #else 
+            expand_node <- FALSE
+        #end if
+        #if str($pathview_select.kegg_native_select.split_group) != ""
+            split_group <- TRUE
+        #else 
+            split_group <- FALSE
+        #end if
+        #if str($pathview_select.kegg_native_select.map_cpdname) != ""
+            map_cpdname <- TRUE
+        #else 
+            map_cpdname <- FALSE
+        #end if
 
+        pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix)
+    #end if
 #end if
 ]]>
         </configfile>
@@ -520,10 +518,13 @@ data <- node.info(object, short.name = short_name)
         <data name="png_output2" format="png" label="pathview on ${on_string}: png output">
             <filter>pathview_select['pathview_selector'] == "yes"</filter>
         </data>
+        <data name="xml_output" format="xml" label="${tool.name} on ${on_string}: xml output">
+            <filter>pathview_select['pathview_selector'] == "yes"</filter>
+        </data>
     </outputs>
 
     <tests>
-        <test expect_num_outputs="1">
+        <!--<test expect_num_outputs="1">
             <param name="object" value="hsa04110.xml" />
             <param name="short_name" value="true" />
             <param name="output" value="kegg.names" />
@@ -597,24 +598,80 @@ data <- node.info(object, short.name = short_name)
                 <param name="na_col" value="transparent" />
                 <param name="trans_fun" value="none"/>
             </conditional>
+            <conditional name="pathview_select">
+                <param name="pathview_selector" value="no" />
+            </conditional>
             <output name="kegg_names_output" value="kegg.names_output.txt" />
             <output name="node_map_output" value="node_map_output2.txt" />
             <output name="node_color_output" value="node_color_output.txt" />
+        </test>-->
+        <test expect_num_outputs="4">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="no" />
+            </conditional>
+            <conditional name="pathview_select">
+                <param name="pathview_selector" value="yes" />
+                <conditional name="data_select">
+                    <param name="data_selector" value="gene" />
+                    <param name="gene_data" value="gene_data.tabular" />
+                    <param name="data_type" value="single" />
+                    <param name="gene_limit" value="0.5" />
+                </conditional>
+                <conditional name="pathway_id_select">
+                    <param name="pathway_id_selector" value="single" />
+                    <param name="pathway_id" value="04110" />
+                </conditional>
+                <param name="species" value="hsa" />
+                <param name="cpd_idtype" value="kegg" />
+                <param name="gene_idtype" value="entrez"    />
+                <param name="gene_annotpkg" value="" />
+                <param name="min_nnodes" value="3" /> 
+                <conditional name="kegg_native_select">
+                    <param name="kegg_native_selector" value="yes" />
+                        <conditional name="same_layer_select">
+                            <param name="same_layer_selector" value="yes" />
+                            <param name="map_symbol" value="true" />
+                        </conditional>
+                        <param name="res" value="300" />
+                        <param name="cex" value="0.25" />
+                </conditional>
+                <param name="map_null" value="true" />
+                <param name="node_sum" value="sum" />
+                <param name="discrete" value="false" />
+                <param name="bin" value="10" />
+                <param name="both_dirs" value="true" />
+                <param name="low" value="green" />
+                <param name="mid" value="gray" />
+                <param name="high" value="red" />
+                <param name="na_col" value="transparent" />
+                <param name="trans_fun" value="none" />
+                <param name="out_suffix" value="gse16873" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="png_output1" value="pathview_png_output1.png" />
+            <output name="png_output2" value="pathview_png_output2.png" />
+            <output name="xml_output" value="pathview_xml_output.xml" />
         </test>
     </tests>
 
     <help><![CDATA[
-Extract node information from KEGG pathway. The parser function, parser KGML file and/or extract node information from KEGG pathway.
+Extract node information from KEGG pathway
+===========================================================================================================================================
 
+The parser function, parser KGML file and/or extract node information from KEGG pathway.
 Parser function node.info extract node data from parsed KEGG pathways. KGML files are parsed using parseKGML2 and KEGGpathway2Graph2. These functions from KEGGgraph package have been heavily modified for reaction parsing and conversion to edges.
 
 It returns:
 
 - a named list of 10 elements: "kegg.names", "type", "component", "size", "labels", "shape", "x", "y", "width" and "height". Each elements record the corresponding attribute for all nodes in the parsed KEGG pathway.
 
+Mapping molecular data(gene expression, metabolite abundance etc)to nodes in KEGG pathway
 ===========================================================================================================================================
 
-If map molecular data onto KEGG pathway nodes is selected. The mapper function, mapping molecular data(gene expression, metabolite abundance etc)to nodes in KEGG pathway.
+If map molecular data onto KEGG pathway nodes is selected.
 
 Mapper function node.map maps user supplied molecular data to KEGG pathways. This function takes standard KEGG molecular IDs (Entrez Gene ID or KEGG Compound Accession) and map them to pathway nodes. None KEGG molecular gene IDs or Compound IDs are pre-mapped to standard KEGG IDs by calling another function mol.sum. When multiple molecules map to one node, the corresponding molecular data are summarized into a single node summary by calling function specified by node.sum. This mapped node summary data together with the parsed KGML data are then returned for further processing. Proper input data include: gene expression, protein expression, genetic association, metabolite abundance, genomic data, literature, and other data types mappable to pathways. The input mol.data may be NULL, then no molecular data are actually mapped, but all nodes of the specified node.type are considered "mappable" and their parsed KGML data returned.
 
@@ -631,6 +688,7 @@ A dataframe of parsed KGML data and summary molecular data for each mapped node 
 - `height:` node height in the original KEGG pathway graph.
 - `other:` columns columns of the mapped gene/compound data
 
+Converts the mapped molecular data
 ===========================================================================================================================================
 
 If code molecular data as pseudo colors on the pathway graph is selected, the function node.color converts the mapped molecular data (gene.data or cpd.data) by node.map function into pseudo colors, which then can be plotted on the pathway graph. col.key is used in combination with node.color in pathview, although this function can be used independently for similar tasks.
@@ -644,6 +702,35 @@ If draw color key(s) for mapped molecular data on the pathway graph is selected.
 It returns:
 
 - png image file
+
+
+Pathway based data integration and visualization
+===========================================================================================================================================
+
+Pathview maps and renders user data on relevant pathway graphs. All users need is to supply their gene or compound data and specify the target pathway. Pathview automatically downloads the pathway graph data, parses the data file, maps user data to the pathway, and render pathway graph with the mapped data. Pathview generates both native KEGG view and Graphviz views for pathways. 
+
+keggview.native and keggview.graph are the two viewer functions, and pathview is the main function providing a unified interface to downloader, parser, mapper and viewer functions.
+
+Pathview maps and renders user data on relevant pathway graphs. Pathview is a stand alone program for pathway based data integration and visualization. It also seamlessly integrates with pathway and functional analysis tools for large-scale and fully automated analysis. Pathview provides strong support for data Integration. It works with: 1) essentially all types of biological data mappable to
+pathways, 2) over 10 types of gene or protein IDs, and 20 types of compound or metabolite IDs, 3) pathways for over 2000 species as well as KEGG orthology, 4) varoius data attributes and formats, i.e. continuous/discrete data, matrices/vectors, single/multiple samples etc. To see mappable external gene/protein IDs do: data(gene.idtype.list), to see mappable external compound related IDs do: data(rn.list); names(rn.list). Pathview generates both native KEGG view and Graphviz views for pathways. Currently only KEGG pathways are implemented. Hopefully, pathways from Reactome, NCI and other databases will be supported in the future.
+
+It returns:
+
+Pathview can accept either a single pathway or multiple pathway ids. The result returned by pathview function is a named list corresponding to the input pathway ids. Each element (for each pathway itself is a named list, with 2 elements ("plot.data.gene", "plot.data.cpd").
+
+Both elements are data.frame or NULL depends on the corresponding input data gene.data and cpd.data. These data.frames record the plot data for mapped gene or compound nodes: rows are mapped genes/compounds, columns are:
+
+- `kegg.names:` standard KEGG IDs/Names for mapped nodes. It’s Entrez Gene ID or KEGG Compound Accessions.
+- `labels:` Node labels to be used when needed.
+- `all.mapped:` All molecule (gene or compound) IDs mapped to this node.
+- `type:` node type, currently 4 types are supported: "gene","enzyme", "compound" and "ortholog".
+- `x:` x coordinate in the original KEGG pathway graph.
+- `y:` y coordinate in the original KEGG pathway graph.
+- `width:` node width in the original KEGG pathway graph.
+- `height:` node height in the original KEGG pathway graph.
+- `other columns:` 1 columns of the mapped gene/compound data and corresponding pseudo-color codes for individual samples
+
+The results returned by keggview.native and codekeggview.graph are both a list of graph plotting parameters. These are not intended to be used externally.
 
     ]]></help>
     <expand macro="citations" />
