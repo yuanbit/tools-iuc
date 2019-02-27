@@ -1,5 +1,5 @@
-<tool id="pathview_node.info" name="node.info" version="@VERSION@.0">
-    <description>extracts node information</description>
+<tool id="pathview" name="pathview" version="@VERSION@.0">
+    <description>visualize pathways</description>
      <macros>
        <import>pathview_macros.xml</import>
     </macros>
@@ -176,7 +176,7 @@ data <- node.info(object, short.name = short_name)
 
                 gene_data <- sim.mol.data(mol.type = "gene", id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
             #else
-                #if str($pathview_select.data_select.data_type) == "single"
+                #if str($pathview_select.data_select.sim_data_select.data_type) == "single"
                     gene_read <- read.table("$pathview_select.data_select.sim_data_select.gene_data", header=FALSE)
                     gene_data <- setNames(gene_read[[2]], gene_read[[1]])
                 #else 
@@ -225,7 +225,7 @@ data <- node.info(object, short.name = short_name)
 
                 cpd_data <- sim.mol.data(mol.type = "cpd", id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
             #else
-                #if str($pathview_select.data_select.data_type) == "single"
+                #if str($pathview_select.data_select.sim_data_select.data_type) == "single"
                     cpd_read <- read.table("$pathview_select.data_select.sim_data_select.cpd_data", header=FALSE)
                     cpd_data <- setNames(cpd_read[[2]], cpd_read[[1]])
                 #else 
@@ -404,9 +404,9 @@ data <- node.info(object, short.name = short_name)
             same_layer <- FALSE
         #end if
 
-        #pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix)
+        pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, kegg.dir = ".", cpd.idtype = cpd_idtype, gene.idtype = gene_idtype, gene.annotpkg = gene_annotpkg, min.nnodes = min_nnodes, kegg.native = kegg_native, map.null = map_null, expand.node = expand_node, split.group = split_group, map.symbol = map_symbol, map.cpdname = map_cpdname, node.sum = node_sum, discrete=discrete, limit = limit, bins = bins, both.dirs = both_dirs, trans.fun = trans_fun, low = low, mid = mid, high = high, na.col = na_col, same.layer = same_layer, out.suffix = out_suffix, keys.align = key_align, key.pos = key_pos)
 
-        pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, out.suffix = out_suffix, keys.align = key_align, kegg.native = kegg_native, key.pos = key_pos)
+        #pathview(gene.data = gene_data, cpd.data = cpd_data, pathway.id = pathway_id, species = species, out.suffix = out_suffix, keys.align = key_align, kegg.native = kegg_native, key.pos = key_pos)
     #else
         kegg_native <- FALSE
         same_layer <- TRUE
@@ -808,14 +808,13 @@ data <- node.info(object, short.name = short_name)
         </data>
         <data name="png_output1" format="png" label="pathview on ${on_string}: png output">
             <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "yes"</filter>
-            <!--<discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" ext="png" visible="true"/>-->
         </data>
         <data name="png_output2" format="png" label="pathview on ${on_string}: png output">
             <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "yes"</filter>
         </data>
         <data name="pdf_output" format="pdf" label="pathview on ${on_string}: pdf output">
             <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "no"</filter>
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" ext="pdf" visible="true" assign_primary_output="true"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" ext="pdf" visible="true" assign_primary_output="true" />
         </data>
         <data name="xml_output" format="xml" label="${tool.name} on ${on_string}: xml output">
             <filter>pathview_select['pathview_selector'] == "yes"</filter>
@@ -823,7 +822,7 @@ data <- node.info(object, short.name = short_name)
     </outputs>
 
     <tests>
-        <!--<test expect_num_outputs="1">
+        <test expect_num_outputs="1">
             <param name="object" value="hsa04110.xml" />
             <param name="short_name" value="true" />
             <param name="output" value="kegg.names" />
@@ -903,7 +902,7 @@ data <- node.info(object, short.name = short_name)
             <output name="kegg_names_output" value="kegg.names_output.txt" />
             <output name="node_map_output" value="node_map_output2.txt" />
             <output name="node_color_output" value="node_color_output.txt" />
-        </test>-->
+        </test>
         <test expect_num_outputs="4">
             <param name="object" value="hsa04110.xml" />
             <param name="short_name" value="true" />
@@ -915,9 +914,20 @@ data <- node.info(object, short.name = short_name)
                 <param name="pathview_selector" value="yes" />
                 <conditional name="data_select">
                     <param name="data_selector" value="gene" />
-                    <param name="gene_data" value="gene_data.tabular" />
-                    <param name="data_type" value="single" />
-                    <param name="gene_limit" value="0.5" />
+                    <conditional name="sim_data_select">
+                        <param name="sim_data_selector" value="no" />
+                        <param name="gene_data" value="gene_data.tabular" />
+                        <param name="data_type" value="single" />
+                    </conditional>
+                    <param name="gene_limit" value="1" />
+                    <param name="discrete" value="false" />
+                    <param name="bin" value="10" />
+                    <param name="both_dirs" value="true" />
+                    <param name="low" value="green" />
+                    <param name="mid" value="gray" />
+                    <param name="high" value="red" />
+                    <param name="na_col" value="transparent" />
+                    <param name="trans_fun" value="none" />
                 </conditional>
                 <conditional name="pathway_id_select">
                     <param name="pathway_id_selector" value="single" />
@@ -939,21 +949,156 @@ data <- node.info(object, short.name = short_name)
                 </conditional>
                 <param name="map_null" value="true" />
                 <param name="node_sum" value="sum" />
-                <param name="discrete" value="false" />
-                <param name="bin" value="10" />
-                <param name="both_dirs" value="true" />
-                <param name="low" value="green" />
-                <param name="mid" value="gray" />
-                <param name="high" value="red" />
-                <param name="na_col" value="transparent" />
-                <param name="trans_fun" value="none" />
                 <param name="out_suffix" value="gse16873" />
+                <param name="key_align" value="x" />
+                <param name="key_pos" value="topright" />
             </conditional>
             <output name="kegg_names_output" value="kegg.names_output.txt" />
-            <output name="png_output1" value="pathview_png_output1.png" />
-            <output name="png_output2" value="pathview_png_output2.png" />
-            <output name="xml_output" value="pathview_xml_output.xml" />
+            <output name="png_output1" value="pathview_gene_output1.png" />
+            <output name="png_output2" value="pathview_gene_output2.png" />
+            <output name="xml_output" value="pathview_gene.xml" />
         </test>
+
+        <!--error with the last two tests-->
+        <test expect_num_outputs="3">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="no" />
+            </conditional>
+            <conditional name="pathview_select">
+                <param name="pathview_selector" value="yes" />
+                <conditional name="data_select">
+                    <param name="data_selector" value="gene" />
+                    <conditional name="sim_data_select">
+                        <param name="sim_data_selector" value="no" />
+                        <param name="gene_data" value="gene_data.tabular" />
+                        <param name="data_type" value="single" />
+                    </conditional>
+                    <param name="gene_limit" value="1" />
+                    <param name="discrete" value="false" />
+                    <param name="bin" value="10" />
+                    <param name="both_dirs" value="true" />
+                    <param name="low" value="green" />
+                    <param name="mid" value="gray" />
+                    <param name="high" value="red" />
+                    <param name="na_col" value="transparent" />
+                    <param name="trans_fun" value="none" />
+                </conditional>
+                <conditional name="pathway_id_select">
+                    <param name="pathway_id_selector" value="single" />
+                    <param name="pathway_id" value="04110" />
+                </conditional>
+                <param name="species" value="hsa" />
+                <param name="cpd_idtype" value="kegg" />
+                <param name="gene_idtype" value="entrez"    />
+                <param name="gene_annotpkg" value="" />
+                <param name="min_nnodes" value="3" /> 
+                <conditional name="kegg_native_select">
+                    <param name="kegg_native_selector" value="no" />
+                    <param name="expand_node" value="false"/>
+                    <param name="split_group" value="false" />
+                    <param name="map_cpdname" value="true" />
+                    <param name="same_layer" value="true" />
+                    <param name="cex" value="0.5" />
+                    <param name="sign_pos" value="bottomleft" />
+                    <param name="pdf_width" value="7" />
+                    <param name="pdf_height" value="7" />
+                    <param name="rankdir" value="LR" />
+                    <param name="is_signal" value="true" /> 
+                    <param name="afactor" value="1" />
+                    <param name="text_width" value="15" />
+                    <param name="cpd_lab_offset" value="1.0" />
+                </conditional>
+                <param name="map_null" value="true" />
+                <param name="node_sum" value="sum" />
+                <param name="out_suffix" value="gse16873" />
+                <param name="key_align" value="x" />
+                <param name="key_pos" value="topright" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="pdf_output" value="hsa04110.gse16873.pdf" />
+            <output name="xml_output" value="hsa04110.xml" />
+        </test>
+        <test expect_num_outputs="4">
+            <param name="object" value="hsa04110.xml" />
+            <param name="short_name" value="true" />
+            <param name="output" value="kegg.names" />
+             <conditional name="node_map_select">
+                <param name="node_map_selector" value="no" />
+            </conditional>
+            <conditional name="pathview_select">
+                <param name="pathview_selector" value="yes" />
+                <conditional name="data_select">
+                    <param name="data_selector" value="both" />
+                    <section name="gene_data">
+                        <conditional name="sim_gene_data_select">
+                            <param name="sim_gene_data_selector" value="no"/>
+                            <param name="gene_data" value="gene_data.tabular" />
+                            <param name="gene_data_type" value="single"/>
+                        </conditional>
+                        <param name="gene_limit" value="1" />
+                        <param name="gene_discrete" value="false" />
+                        <param name="gene_bin" value="10" />
+                        <param name="gene_both_dirs" value="true" />
+                        <param name="gene_low" value="green" />
+                        <param name="gene_mid" value="gray" />
+                        <param name="gene_high" value="red" />
+                        <param name="gene_na_col" value="transparent" />
+                        <param name="gene_trans_fun" value="none" />
+                    </section>
+                    <section name="cpd_data">
+                        <conditional name="sim_cpd_data_select">
+                            <param name="sim_cpd_data_selector" value="yes" />
+                            <param name="id_type" value="" />
+                            <param name="species" value="hsa" />
+                            <param name="discrete" value="false" />
+                            <param name="nmol" value="3000"/>
+                            <param name="nexp" value="1" />
+                            <param name="rand_seed" value="100" />
+                        </conditional>
+                        <param name="cpd_limit" value="1" />
+                        <param name="cpd_discrete" value="false" />
+                        <param name="cpd_bin" value="10" />
+                        <param name="cpd_both_dirs" value="true" />
+                        <param name="cpd_low" value="green" />
+                        <param name="cpd_mid" value="gray" />
+                        <param name="cpd_high" value="red" />
+                        <param name="cpd_na_col" value="transparent" />
+                        <param name="cpd_trans_fun" value="none" />
+                    </section>
+                </conditional>
+                <conditional name="pathway_id_select">
+                    <param name="pathway_id_selector" value="single" />
+                    <param name="pathway_id" value="00640" />
+                </conditional>
+                <param name="species" value="hsa" />
+                <param name="cpd_idtype" value="kegg" />
+                <param name="gene_idtype" value="entrez"    />
+                <param name="gene_annotpkg" value="" />
+                <param name="min_nnodes" value="3" /> 
+                <conditional name="kegg_native_select">
+                    <param name="kegg_native_selector" value="yes" />
+                        <conditional name="same_layer_select">
+                            <param name="same_layer_selector" value="yes" />
+                            <param name="map_symbol" value="true" />
+                        </conditional>
+                        <param name="res" value="300" />
+                        <param name="cex" value="0.25" />
+                </conditional>
+                <param name="map_null" value="true" />
+                <param name="node_sum" value="sum" />
+                <param name="out_suffix" value="gse16873.cpd" />
+                <param name="key_align" value="y" />
+                <param name="key_pos" value="bottomleft" />
+            </conditional>
+            <output name="kegg_names_output" value="kegg.names_output.txt" />
+            <output name="png_output1" value="pathview_gene_cpd_output1.png" />
+            <output name="png_output2" value="pathview_gene_cpd_output2.png" />
+            <output name="xml_output" value="pathview_gene_cpd.xml" />
+        </test>
+        <!--Need to test multiple states in one graph pg 24 in manual-->
     </tests>
 
     <help><![CDATA[
