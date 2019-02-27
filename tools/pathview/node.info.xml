@@ -10,8 +10,10 @@
 
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$script' &&
-        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".png "$png_output1" &&
-        mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png "$png_output2" &&
+        if [ -f "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".png] ;
+        then mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".png "$png_output1" ; fi &&
+        if [ -f "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png] ;
+        then mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id"."$pathview_select.out_suffix".png "$png_output2" ; fi &&
         mv "$pathview_select.species$pathview_select.pathway_id_select.pathway_id".xml "$xml_output"
     ]]></command>
 
@@ -152,20 +154,66 @@ data <- node.info(object, short.name = short_name)
 
 #if str($pathview_select.pathview_selector) == "yes"
     #if str($pathview_select.data_select.data_selector) == "gene"
-        #if str($pathview_select.data_select.data_type) == "single"
-            gene_read <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
-            gene_data <- setNames(gene_read[[2]], gene_read[[1]])
-        #else 
-            gene_data <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
+        #if str($pathview_select.data_select.sim_data_select.sim_data_selector) == "yes"
+            #if str($pathview_select.data_select.sim_data_select.id_type) != ""
+                id_type <- "$pathview_select.data_select.sim_data_select.id_type"
+            #else
+                id_type <- NULL
+            #end if
+            species <- "$pathview_select.data_select.sim_data_select.species"
+            #if str($pathview_select.data_select.sim_data_select.discrete) != ""
+                discrete <- TRUE
+            #else
+                discrete <- FALSE
+            #end if
+            nmol <- as.numeric("$pathview_select.data_select.sim_data_select.nmol")
+            nexp <- as.numeric("$pathview_select.data_select.sim_data_select.nexp")
+            rand_seed <- as.numeric("$pathview_select.data_select.sim_data_select.rand_seed")
+
+            gene_data <- sim.mol.data(mol.type = mol_type, id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
+
+            #if str($pathview_select.data_select.sim_data_select.gene_data_output) != ""
+                write.table(gene_data, "$gene_data_output", row.name=TRUE, col.name=FALSE, quote=FALSE)
+            #end if
+        #else
+            #if str($pathview_select.data_select.data_type) == "single"
+                gene_read <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
+                gene_data <- setNames(gene_read[[2]], gene_read[[1]])
+            #else 
+                gene_data <- read.table("$pathview_select.data_select.gene_data", header=FALSE)
+            #end if
         #end if
         cpd_data <- NULL
         limit <- as.numeric("$pathview_select.data_select.gene_limit")     
     #else
-        #if str($pathview_select.data_select.data_type) == "single"
-            cpd_read <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
-            cpd_data <- setNames(cpd_read[[2]], cpd_read[[1]])
-        #else 
-            cpd_data <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
+        #if str($pathview_select.data_select.sim_data_select.sim_data_selector) == "yes"
+            #if str($pathview_select.data_select.sim_data_select.id_type) != ""
+                id_type <- "$pathview_select.data_select.sim_data_select.id_type"
+            #else
+                id_type <- NULL
+            #end if
+            species <- "$pathview_select.data_select.sim_data_select.species"
+            #if str($pathview_select.data_select.sim_data_select.discrete) != ""
+                discrete <- TRUE
+            #else
+                discrete <- FALSE
+            #end if
+            nmol <- as.numeric("$pathview_select.data_select.sim_data_select.nmol")
+            nexp <- as.numeric("$pathview_select.data_select.sim_data_select.nexp")
+            rand_seed <- as.numeric("$pathview_select.data_select.sim_data_select.rand_seed")
+
+            gene_data <- sim.mol.data(mol.type = mol_type, id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
+
+            #if str($pathview_select.data_select.sim_data_select.gene_data_output) != ""
+                write.table(gene_data, "$gene_data_output", row.name=TRUE, col.name=FALSE, quote=FALSE)
+            #end if
+        #else
+            #if str($pathview_select.data_select.data_type) == "single"
+                cpd_read <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
+                cpd_data <- setNames(cpd_read[[2]], cpd_read[[1]])
+            #else 
+                cpd_data <- read.table("$pathview_select.data_select.cpd_data", header=FALSE)
+            #end if
         #end if
         gene_data <- NULL
         limit <- as.numeric("$pathview_select.data_select.cpd_limit")
@@ -311,7 +359,7 @@ data <- node.info(object, short.name = short_name)
                     <when value="yes">
                         <conditional name="data_select">
                             <param name="data_selector" type="select" label="Is the mapped molecular data gene.data or cpd.data?">
-                                <option value="gene">gene</option>
+                                <option value="gene" selected="true">gene</option>
                                 <option value="cpd">cpd</option>
                             </param>
                             <when value="gene">
@@ -375,25 +423,60 @@ data <- node.info(object, short.name = short_name)
             </param>
             <when value="yes">
                 <conditional name="data_select">
-                    <param name="data_selector" type="select" label="Specify gene or cpd data?" >
-                        <option value="gene">gene</option>
-                        <option value="cpd" selected="true">cpd</option>
+                    <param name="data_selector" type="select" label="Visualize gene data, cpd data, or both?" >
+                        <option value="gene" selected="true">gene</option>
+                        <option value="cpd">cpd</option>
+                        <option value="both">both</option>
                     </param>
                     <when value="gene">
-                        <param name="gene_data" type="data" format="tabular" label="Gene data" help="Dataframe with either one column of gene IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the gene IDs and the second column is the data." />
-                        <param name="data_type" type="select" label="Single or Multiple sample specified?" >
-                            <option value="single">Single</option>
-                            <option value="multiple">Multiple</option>
-                        </param>
-                        <param name="gene_limit" type="float" value="0.5" label="Specify the limit value for gene.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." />
+                        <conditional name="sim_data_select">
+                            <param name="sim_data_selector" type="select" label="Simulate molecular data or upload dataframe?" >
+                                <option value="yes">Yes</option>
+                                <option value="no" selected="true">No</option>
+                            </param>
+                            <when value="yes">
+                                <param name="id_type" type="text" optional="true" label="Molecular ID type" help="When molecular type is gene, proper ID types include KEGG and ENTREZ (Entrez Gene). Multiple other ID types are also valid When species is among 19 major species fully annotated in Bioconductor, e.g. hsa (human), mmu (mouse) etc, check: data(gene.idtype.bods); gene.idtype.bods for other valid ID types. When molecular type is cpd, check data(cpd.simtypes); cpd.simtypes for valid ID types." />
+                                <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name). Gene data id.type has multiple other choices for 19 major research species, for details see gene.idtype.bods; gene.idtype.bods. When other species are specified, gene id.type is limited to KEGG and ENTREZ." />
+                                <param name="discrete" type="boolean" truevalue="true" falsevalue="" checked="false" label="Generate discrete or continuous data?" help="If yes is selected mol.data will be a charactor vector of molecular IDs." />
+                                <param name="nmol" type="integer" value="1000" label="Target number of different molecules" help="Note that the specified id.type may not have as many different IDs as nmol. In this case, all IDs of id.type are used." />
+                                <param name="nexp" type="integer" value="1" label="Sample size or the number of columns in the result simulated data" />
+                                <param name="rand_seed" type="float" value="100" label="Seed number to start the random sampling process" help="This argumemnt makes the simulation reproducible as long as its value keeps the same." />
+                                <param name="gene_data_output" type="boolean" truevalue="true" falsevalue="" checked="false" label="Save gene data?" />
+                            </when>
+                            <when value="no">
+                                <param name="gene_data" type="data" format="tabular" label="Gene data" help="Dataframe with either one column of gene IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). Matrix-like data structure has genes as rows and samples as columns. Row names should be gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the gene IDs and the second column is the data." />
+                                <param name="data_type" type="select" label="Single or Multiple sample specified?" >
+                                    <option value="single">Single</option>
+                                    <option value="multiple">Multiple</option>
+                                </param>
+                                <param name="gene_limit" type="float" value="0.5" label="Specify the limit value for gene.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data." />
+                            </when>
+                        </conditional>
                     </when>
                     <when value="cpd"> 
-                        <param name="cpd_data" type="data" format="tabular" label="cpd data" help="Dataframe with either one column of  IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). cpd data is named with IDs mappable to KEGG compound IDs. Over 20 types of IDs included in CHEMBL database can be used here. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the IDs and the second column is the data." />
-                        <param name="data_type" type="select" label="Single or Multiple sample specified?" >
-                            <option value="single">Single</option>
-                            <option value="multiple">Multiple</option>
-                        </param>
-                         <param name="cpd_limit" type="float" value="1" label="Specify the limit value for cpd.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data."/>
+                        <conditional name="sim_data_select">
+                            <param name="sim_data_selector" type="select" label="Simulate molecular data or upload dataframe?" >
+                                <option value="yes">Yes</option>
+                                <option value="no" selected="true">No</option>
+                            </param>
+                            <when value="yes">
+                                <param name="id_type" type="text" optional="true" label="Molecular ID type" help="When molecular type is gene, proper ID types include KEGG and ENTREZ (Entrez Gene). Multiple other ID types are also valid When species is among 19 major species fully annotated in Bioconductor, e.g. hsa (human), mmu (mouse) etc, check: data(gene.idtype.bods); gene.idtype.bods for other valid ID types. When molecular type is cpd, check data(cpd.simtypes); cpd.simtypes for valid ID types." />
+                                <param name="species" type="text" value="hsa" label="KEGG code, the scientific name, or the common name of the target species" help="When KEGG ortholog pathway is considered, use ko. The default species is Homo sapiens (scientific name) or human (common name). Gene data id.type has multiple other choices for 19 major research species, for details see gene.idtype.bods; gene.idtype.bods. When other species are specified, gene id.type is limited to KEGG and ENTREZ." />
+                                <param name="discrete" type="boolean" truevalue="true" falsevalue="" checked="false" label="Generate discrete or continuous data?" help="If yes is selected mol.data will be a charactor vector of molecular IDs." />
+                                <param name="nmol" type="integer" value="1000" label="Target number of different molecules" help="Note that the specified id.type may not have as many different IDs as nmol. In this case, all IDs of id.type are used." />
+                                <param name="nexp" type="integer" value="1" label="Sample size or the number of columns in the result simulated data" />
+                                <param name="rand_seed" type="float" value="100" label="Seed number to start the random sampling process" help="This argumemnt makes the simulation reproducible as long as its value keeps the same." />
+                                <param name="gene_cpd_output" type="boolean" truevalue="true" falsevalue="" checked="false" label="Save cpd data?" />
+                            </when>
+                            <when value="no">
+                                <param name="cpd_data" type="data" format="tabular" label="cpd data" help="Dataframe with either one column of  IDs and one numeric/character column (single sample) or a matrix-like data (multiple sample). cpd data is named with IDs mappable to KEGG compound IDs. Over 20 types of IDs included in CHEMBL database can be used here. Check details for mappable ID types. When single sample is used, the first column of the dataframe is the IDs and the second column is the data." />
+                                <param name="data_type" type="select" label="Single or Multiple sample specified?" >
+                                    <option value="single">Single</option>
+                                    <option value="multiple">Multiple</option>
+                                </param>
+                                 <param name="cpd_limit" type="float" value="1" label="Specify the limit value for cpd.data when converting them to pseudo colors" help="Specify length 1 or 2. Length 1 suggests discrete data or 1 directional (positive-valued) data, or the absolute limit for 2 directional data. Length 2 suggests 2 directional data."/>
+                            </when>
+                        </conditional>
                     </when>
                 </conditional>
                 <conditional name="pathway_id_select">
@@ -444,7 +527,7 @@ data <- node.info(object, short.name = short_name)
                             <option value="topleft">topleft</option>
                             <option value="topright">topright</option>
                         </param>
-                        <param name="path_graph" type="data" format="png" label="Graph object parsed from KGML file" />
+                        <!--<param name="path_graph" type="data" format="png" label="Graph object parsed from KGML file" />-->
                         <param name="pdf_width" type="float" value="7" label="Width of the pathway graph pdf file" help="Note that pdf width increase by half when same.layer=TRUE to accommodate legends." />
                         <param name="pdf_height" type="float" value="7" label="Height of the pathway graph pdf file" help="Note that pdf width increase by half when same.layer=TRUE to accommodate legends." />
                         <param name="rankdir" type="select" label="Specify the pathway graph layout direction">
@@ -512,11 +595,21 @@ data <- node.info(object, short.name = short_name)
         <data name="col_key_output" format="png" label="col.key on ${on_string}: output" >
             <filter>node_map_select['node_map_selector']=="yes" and node_map_select['node_color_select']['node_color_selector'] == "yes" and node_map_select['node_color_select']['col_key_select']['col_key_selector'] == "yes"</filter>
         </data>
+        <data name="gene_data_output" format="txt" label="sim.mol.data on ${on_string}: gene data output">
+            <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['data_select']['data_selector'] == "gene" and pathview_select['data_select']['sim_data_select']['sim_data_selector'] == "yes"</filter>
+        </data>
+        <data name="cpd_data_output" format="txt" label="sim.mol.data on ${on_string}: cpd data output">
+            <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['data_select']['data_selector'] == "cpd" and pathview_select['data_select']['sim_data_select']['sim_data_selector'] == "yes"</filter>
+        </data>
         <data name="png_output1" format="png" label="pathview on ${on_string}: png output">
-            <filter>pathview_select['pathview_selector'] == "yes"</filter>
+            <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "yes"</filter>
         </data>
         <data name="png_output2" format="png" label="pathview on ${on_string}: png output">
-            <filter>pathview_select['pathview_selector'] == "yes"</filter>
+            <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "yes"</filter>
+        </data>
+        <data name="pdf_output" format="pdf" label="pathview on ${on_string}: pdf output">
+            <filter>pathview_select['pathview_selector'] == "yes" and pathview_select['kegg_native_select']['kegg_native_selector'] == "no"</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" ext="pdf" visible="true" assign_primary_output="true"/>
         </data>
         <data name="xml_output" format="xml" label="${tool.name} on ${on_string}: xml output">
             <filter>pathview_select['pathview_selector'] == "yes"</filter>

@@ -40,7 +40,7 @@ rand_seed <- as.numeric("$rand_seed")
 
 result <- sim.mol.data(mol.type = mol_type, id.type = id_type, species=species, discrete = discrete, nmol = nmol, nexp = nexp, rand.seed=rand_seed)
 
-write.table(result, "$output", row.name=FALSE, col.name=FALSE, quote=FALSE)
+write.table(result, "$output", row.name=TRUE, col.name=FALSE, quote=FALSE)
 
 ]]>
         </configfile>
