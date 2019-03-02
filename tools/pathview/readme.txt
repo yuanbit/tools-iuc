@@ -6,9 +6,7 @@ TODO:
 -eg2id
 -mol.sum
 -node.color: no documentation for col.key -- cannot get output
--pathview: 80% done. Two tests have errors. Need to write test for multiple states in one graph pg 24 in manual (when matrix like data structure is uploaded (multiple sample))
-
-
+-pathview: all the parameters are integrated. Separate functions: keggview.native and keggview.graph need to be integered in the command and be tested
 
 Tools tested:
 
@@ -21,3 +19,4 @@ Tools tested:
 -node.info
 -node.map
 -node.color
+-pathview
